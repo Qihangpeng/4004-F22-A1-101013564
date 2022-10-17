@@ -20,10 +20,20 @@ public class AppTest
     }
     @Test
     public void playerConnection(){
-        Server s = new Server(4000);
-        Player a = new Player("a",4001, s.InetAddress());
-        Player b = new Player("b",4002, s.InetAddress());
-        Player c = new Player("c",4003, s.InetAddress());
+        Player a = new Player((byte) 1,4001);
+        Player b = new Player((byte) 2,4002);
+        Player c = new Player((byte) 3,4003);
+        Thread st = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Server s = new Server(4000);
+                s.connect();
+            }
+        });
+        st.start();
+        a.connect(4000);
+        b.connect(4000);
+        c.connect(4000);
     }
-    
+
 }
