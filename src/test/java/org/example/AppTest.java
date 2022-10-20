@@ -71,5 +71,19 @@ public class AppTest
         System.out.println(a.score());
     }
 
+    @Test
+    public void drawCard(){
+        Player a = new Player((byte)1);
+        for(int i = 0; i<10; i++){
+            System.out.println(a.drawCard());
+        }
+    }
+
+    @Test
+    public void rollDice(){
+        Player a = new Player((byte) 1);
+        System.out.println(a.rollDice());
+    }
+
 
 }
