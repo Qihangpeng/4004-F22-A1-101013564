@@ -3,8 +3,11 @@ package Server;
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Server {
+    private Map<String, Integer> fortuneCard;
     private byte turn;
     private DatagramSocket send;
     private DatagramSocket receive;
@@ -12,6 +15,15 @@ public class Server {
     private ArrayList<Integer> playerPort;
 
     public Server(int port){
+        fortuneCard = new HashMap<>();
+        fortuneCard.put("Treasure Chest", 1);
+        fortuneCard.put("Captain", 2);
+        fortuneCard.put("Sorceress", 3);
+        fortuneCard.put("Sea Battle", 4);
+        fortuneCard.put("Gold", 5);
+        fortuneCard.put("Diamond", 6);
+        fortuneCard.put("Monkey Business", 7);
+        fortuneCard.put("Skulls", 8);
         turn = 1;
         this.port = port;
         try{
@@ -67,6 +79,10 @@ public class Server {
 
     public byte getTurn(){
         return turn;
+    }
+
+    public void setTurn(int turn){
+        this.turn = (byte)turn;
     }
 
 

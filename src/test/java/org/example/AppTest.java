@@ -91,7 +91,7 @@ public class AppTest
     @Test
     public void re_roll(){
         Player a = new Player(1);
-        ArrayList<String> dice = new ArrayList<>();
+        ArrayList<Integer> dice = new ArrayList<>();
         Random random = new Random();
         ArrayList<Integer> index = new ArrayList<>();
         //generate 8 random roll result
@@ -116,6 +116,8 @@ public class AppTest
             System.out.println(s.nextTurn());
         }
     }
+
+
 
 
 }

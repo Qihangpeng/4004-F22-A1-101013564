@@ -73,19 +73,27 @@ public class Player {
         return cards.get(card);
     }
 
-    public String rollDice(){
+    public int rollDice(){
         Random random = new Random();
         int num;
         num = random.nextInt(6);
-        return dice.get(num);
+        return num;
     }
 
 
-    public ArrayList<String> re_roll(ArrayList<String> dice, ArrayList<Integer> index){
+    public ArrayList<Integer> re_roll(ArrayList<Integer> dice, ArrayList<Integer> index){
         for(int i = 0; i < index.size(); i++){
-            dice.set(i,rollDice());
+            dice.set(i, rollDice());
         }
         return dice;
+    }
+
+    public int countScore(ArrayList<Integer> dice){
+        int score = 0;
+        for(int i: dice){
+
+        }
+        return score;
     }
 
 
