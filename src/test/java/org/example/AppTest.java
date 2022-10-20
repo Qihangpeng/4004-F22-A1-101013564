@@ -5,6 +5,9 @@ import Player.Player;
 import Server.Server;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 /**
  * Unit test for simple App.
  */
@@ -83,6 +86,26 @@ public class AppTest
     public void rollDice(){
         Player a = new Player((byte) 1);
         System.out.println(a.rollDice());
+    }
+
+    @Test
+    public void re_roll(){
+        Player a = new Player((byte)1);
+        ArrayList<String> dice = new ArrayList<>();
+        Random random = new Random();
+        ArrayList<Integer> index = new ArrayList<>();
+        //generate 8 random roll result
+        for(int i = 0; i < 8; i++){
+            dice.add(a.rollDice());
+        }
+        //generate random number of random indices to re-roll
+        for(int i = 0; i<random.nextInt(8); i++){
+            index.add(random.nextInt(8));
+        }
+        System.out.println("result:          " + dice);
+        System.out.println("re-roll indices: " + index);
+        dice = a.re_roll(dice, index);
+        System.out.println("new result:      " + dice);
     }
 
 

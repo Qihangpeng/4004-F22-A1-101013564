@@ -3,10 +3,7 @@ package Player;
 
 import java.io.IOException;
 import java.net.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class Player {
     private Map<Byte, String> cards;
@@ -76,15 +73,19 @@ public class Player {
         return cards.get(card);
     }
 
-    public ArrayList<String> rollDice(){
-        ArrayList<String> result = new ArrayList<>();
+    public String rollDice(){
         Random random = new Random();
         int num;
-        for(int i = 0; i < 8; i++){
-            num = random.nextInt(6);
-            result.add(dice.get(num));
+        num = random.nextInt(6);
+        return dice.get(num);
+    }
+
+
+    public ArrayList<String> re_roll(ArrayList<String> dice, ArrayList<Integer> index){
+        for(int i = 0; i < index.size(); i++){
+            dice.set(i,rollDice());
         }
-        return result;
+        return dice;
     }
 
 
