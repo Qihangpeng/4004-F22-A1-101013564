@@ -65,5 +65,11 @@ public class AppTest
         ct.start();
     }
 
+    @Test
+    public void score(){
+        Player a = new Player((byte)1);
+        System.out.println(a.score());
+    }
+
 
 }
