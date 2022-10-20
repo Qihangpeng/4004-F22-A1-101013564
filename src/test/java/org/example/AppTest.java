@@ -36,19 +36,19 @@ public class AppTest
         Thread at = new Thread(new Runnable() {
             @Override
             public void run() {
-                Player a = new Player((byte) 1);
+                Player a = new Player(1);
                 a.connect(4000);
             }
         });Thread bt = new Thread(new Runnable() {
             @Override
             public void run() {
-                Player b = new Player((byte) 2);
+                Player b = new Player(2);
                 b.connect(4000);
             }
         });Thread ct = new Thread(new Runnable() {
             @Override
             public void run() {
-                Player c = new Player((byte) 3);
+                Player c = new Player(3);
                 c.connect(4000);
             }
         });
@@ -70,13 +70,13 @@ public class AppTest
 
     @Test
     public void score(){
-        Player a = new Player((byte)1);
+        Player a = new Player(1);
         System.out.println(a.score());
     }
 
     @Test
     public void drawCard(){
-        Player a = new Player((byte)1);
+        Player a = new Player(1);
         for(int i = 0; i<10; i++){
             System.out.println(a.drawCard());
         }
@@ -84,13 +84,13 @@ public class AppTest
 
     @Test
     public void rollDice(){
-        Player a = new Player((byte) 1);
+        Player a = new Player(1);
         System.out.println(a.rollDice());
     }
 
     @Test
     public void re_roll(){
-        Player a = new Player((byte)1);
+        Player a = new Player(1);
         ArrayList<String> dice = new ArrayList<>();
         Random random = new Random();
         ArrayList<Integer> index = new ArrayList<>();
@@ -106,6 +106,15 @@ public class AppTest
         System.out.println("re-roll indices: " + index);
         dice = a.re_roll(dice, index);
         System.out.println("new result:      " + dice);
+    }
+
+    @Test
+    public void countTurn(){
+        Server s = new Server(4000);
+        System.out.println(s.getTurn());
+        for(int i = 0; i < 20; i++){
+            System.out.println(s.nextTurn());
+        }
     }
 
 

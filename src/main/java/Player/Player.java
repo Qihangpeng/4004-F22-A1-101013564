@@ -10,10 +10,10 @@ public class Player {
     private Map<Integer, String> dice;
     private DatagramSocket send;
     private DatagramSocket receive;
-    private final Byte id;
+    private final int id;
     private int port;
     private ArrayList<Integer> scoreCard;
-    public Player(byte id){
+    public Player(int id){
         cards = new HashMap<>();
         cards.put((byte) 0,"Treasure Chest");
         cards.put((byte) 1, "Captain");
@@ -43,7 +43,7 @@ public class Player {
     }
     public void connect(int serverPort){
         byte[] msg = new byte[1];
-        msg[0] = id;
+        msg[0] = (byte)id;
         try {
             DatagramPacket sendPacket = new DatagramPacket(msg, msg.length, InetAddress.getLocalHost(), serverPort);
             send.send(sendPacket);

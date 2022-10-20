@@ -5,12 +5,14 @@ import java.net.*;
 import java.util.ArrayList;
 
 public class Server {
+    private byte turn;
     private DatagramSocket send;
     private DatagramSocket receive;
     private int port;
     private ArrayList<Integer> playerPort;
 
     public Server(int port){
+        turn = 1;
         this.port = port;
         try{
             send = new DatagramSocket();
@@ -53,6 +55,18 @@ public class Server {
                 System.out.println(e);
             }
         }
+    }
+
+    public byte nextTurn(){
+        turn++;
+        if(turn == 4){
+            turn = 1;
+        }
+        return turn;
+    }
+
+    public byte getTurn(){
+        return turn;
     }
 
 
