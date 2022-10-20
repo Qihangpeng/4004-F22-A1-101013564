@@ -18,11 +18,11 @@ public class AppTest
     {
         assertTrue( true );
     }
+
+    //test server and players initialization and connections between server and player
+
     @Test
-    public void playerConnection(){
-        Player a = new Player((byte) 1,4001);
-        Player b = new Player((byte) 2,4002);
-        Player c = new Player((byte) 3,4003);
+    public void startGame(){
         Thread st = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -30,10 +30,40 @@ public class AppTest
                 s.connect();
             }
         });
+        Thread at = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Player a = new Player((byte) 1);
+                a.connect(4000);
+            }
+        });Thread bt = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Player b = new Player((byte) 2);
+                b.connect(4000);
+            }
+        });Thread ct = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Player c = new Player((byte) 3);
+                c.connect(4000);
+            }
+        });
         st.start();
-        a.connect(4000);
-        b.connect(4000);
-        c.connect(4000);
+        at.start();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        bt.start();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        ct.start();
     }
+
 
 }
