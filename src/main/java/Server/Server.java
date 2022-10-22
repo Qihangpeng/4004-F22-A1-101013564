@@ -87,6 +87,15 @@ public class Server {
 
     public int countDice(ArrayList<Integer> dice){
         int score = 0;
+        int skulls = 0;
+        for (Integer die: dice) {
+            if(die == 3){
+                skulls++;
+            }
+        }
+        if(skulls >= 3){
+            return 0;
+        }
         return score;
     }
 

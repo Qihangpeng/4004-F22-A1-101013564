@@ -30,11 +30,7 @@ public class AppTest
         dice.add(h);
         return dice;
     }
-    @Test
-    public void shouldAnswerWithTrue()
-    {
-        assertTrue( true );
-    }
+
 
     //test server and players initialization and connections between server and player
 
@@ -143,8 +139,9 @@ public class AppTest
     public void r45(){
         ArrayList<Integer> dice = generateDice(3,3,3,5,5,5,5,5);
         Server s = new Server(4000);
-        assertEquals(s.countDice(dice),0);
+        assertEquals(0,s.countDice(dice));
     }
+    
 
 
 
