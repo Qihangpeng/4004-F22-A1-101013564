@@ -85,5 +85,10 @@ public class Server {
         this.turn = (byte)turn;
     }
 
+    public int countDice(ArrayList<Integer> dice){
+        int score = 0;
+        return score;
+    }
+
 
 }

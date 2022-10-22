@@ -15,7 +15,7 @@ public class Player {
     private ArrayList<Integer> scoreCard;
     public Player(int id){
         cards = new HashMap<>();
-        cards.put((byte) 0,"Treasure Chest");
+        cards.put((byte) 0, "Treasure Chest");
         cards.put((byte) 1, "Captain");
         cards.put((byte) 2, "Sorceress");
         cards.put((byte) 3, "Sea Battle");
