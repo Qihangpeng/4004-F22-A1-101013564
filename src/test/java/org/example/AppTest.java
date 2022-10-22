@@ -1,9 +1,9 @@
 package org.example;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import Player.Player;
 import Server.Server;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -136,12 +136,29 @@ public class AppTest
     //dice with corresponding number
     @Test
     //die with 3 skulls 5 swords on first roll: player gets a score of 0
-    public void r45(){
+    public void row45(){
         ArrayList<Integer> dice = generateDice(3,3,3,5,5,5,5,5);
         Server s = new Server(4000);
         assertEquals(0,s.countDice(dice));
     }
-    
+
+
+    @Test
+    //roll 1 skull, 4 parrots, 3 swords, re-roll 3 swords, get 2 skulls 1 sword  die
+    public void row46(){
+        Player a = new Player(1);
+        ArrayList<Integer> dice = generateDice(1,1,1,1,3,4,4,4);
+        ArrayList<Integer> index = new ArrayList<>();
+        index.add(5);
+        index.add(6);
+        index.add(7);
+        ArrayList<Integer> outcome = new ArrayList<>();
+        outcome.add(3);
+        outcome.add(3);
+        outcome.add(4);
+        ArrayList<Integer> result = a.re_roll(dice, index, outcome);
+        Assertions.assertTrue(a.isDead(result, 0));
+    }
 
 
 

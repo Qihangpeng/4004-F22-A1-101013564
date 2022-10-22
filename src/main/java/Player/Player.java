@@ -80,11 +80,20 @@ public class Player {
         return num;
     }
 
-
+    //player can re-roll a number of dice
     public ArrayList<Integer> re_roll(ArrayList<Integer> dice, ArrayList<Integer> index){
         for(int i = 0; i < index.size(); i++){
             dice.set(i, rollDice());
         }
+        return dice;
+    }
+
+    //re-roll with cheat, outcome can be specified
+    public ArrayList<Integer> re_roll(ArrayList<Integer> dice, ArrayList<Integer> index, ArrayList<Integer> outcome){
+        for(Integer i: index){
+            dice.remove(i);
+        }
+        dice.addAll(outcome);
         return dice;
     }
 
@@ -94,6 +103,20 @@ public class Player {
 
         }
         return score;
+    }
+
+    public Boolean isDead(ArrayList<Integer> dice, int fc){
+        if(fc == 7){
+            return false;
+        }else{
+            int skulls = 0;
+            for(Integer die: dice){
+                if(die == 3){
+                    skulls++;
+                }
+            }
+            return skulls >= 2;
+        }
     }
 
 
