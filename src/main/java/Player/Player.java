@@ -115,7 +115,7 @@ public class Player {
                     skulls++;
                 }
             }
-            return skulls >= 2;
+            return skulls >= 3;
         }
     }
 

@@ -175,7 +175,31 @@ public class AppTest
         Assertions.assertTrue(a.isDead(result, 0));
     }
 
+    @Test
+    //roll 1 skull, 4 parrots, 3 swords, re-roll swords, get 1 skull 2 monkeys,
+    //      re-roll 2 monkeys, get 1 skull 1 monkey and die
+    public void row48(){
+        Player a = new Player(1);
+        ArrayList<Integer> dice = generateDice(1,1,1,1,3,4,4, 4);
+        ArrayList<Integer> index = new ArrayList<>();
+        index.add(5);
+        index.add(6);
+        index.add(7);
+        ArrayList<Integer> outcome = new ArrayList<>();
+        outcome.add(3);
+        outcome.add(2);
+        outcome.add(2);
+        ArrayList<Integer> result = a.re_roll(dice, index, outcome);
+        Assertions.assertFalse(a.isDead(result, 0));
+        index.remove(0);
+        outcome.remove(1);
+        result = a.re_roll(result, index, outcome);
+        Assertions.assertTrue(a.isDead(result, 0));
+    }
+
     
+
+
 
 
 
