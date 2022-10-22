@@ -128,7 +128,7 @@ public class AppTest
     }
 
     //        dice.put(0, "Coin");
-    //        dice.put(1, "Fish");
+    //        dice.put(1, "parrot");
     //        dice.put(2, "Monkey");
     //        dice.put(3, "Skull");
     //        dice.put(4,"Swords");
@@ -160,6 +160,22 @@ public class AppTest
         Assertions.assertTrue(a.isDead(result, 0));
     }
 
+    @Test
+    //roll 2 skulls, 4 parrots, 2 swords, re-roll swords, get 1 skull 1 sword  die
+    public void row47(){
+        Player a = new Player(1);
+        ArrayList<Integer> dice = generateDice(1,1,1,1,3,3,4,4);
+        ArrayList<Integer> index = new ArrayList<>();
+        index.add(6);
+        index.add(7);
+        ArrayList<Integer> outcome = new ArrayList<>();
+        outcome.add(3);
+        outcome.add(4);
+        ArrayList<Integer> result = a.re_roll(dice, index, outcome);
+        Assertions.assertTrue(a.isDead(result, 0));
+    }
+
+    
 
 
 

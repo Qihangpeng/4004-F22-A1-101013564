@@ -26,7 +26,7 @@ public class Player {
         scoreCard = new ArrayList<>();
         dice = new HashMap<>();
         dice.put(0, "Coin");
-        dice.put(1, "Fish");
+        dice.put(1, "parrot");
         dice.put(2, "Monkey");
         dice.put(3, "Skull");
         dice.put(4,"Swords");
