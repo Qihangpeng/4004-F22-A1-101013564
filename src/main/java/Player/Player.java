@@ -6,12 +6,12 @@ import java.net.*;
 import java.util.*;
 
 public class Player {
-    private Map<Byte, String> cards;
-    private Map<Integer, String> dice;
+    private final Map<Byte, String> cards;
+    private final Map<Integer, String> dice;
     private DatagramSocket send;
     private DatagramSocket receive;
     private final int id;
-    private int port;
+    private final int port;
     private ArrayList<Integer> scoreCard;
     public Player(int id){
         cards = new HashMap<>();
@@ -97,14 +97,6 @@ public class Player {
         return dice;
     }
 
-    public int countScore(ArrayList<Integer> dice){
-        int score = 0;
-        for(int i: dice){
-
-        }
-        return score;
-    }
-
     public Boolean isDead(ArrayList<Integer> dice, int fc){
         if(fc == 7){
             return false;
@@ -120,6 +112,20 @@ public class Player {
             }
             return true;
         }
+    }
+
+    public int countScore(ArrayList<Integer> dice, int fc){
+        int score = 0;
+        int skulls = 0;
+        for (Integer die: dice) {
+            if(die == 3){
+                skulls++;
+            }
+        }
+        if(skulls >= 3){
+            return 0;
+        }
+        return score;
     }
 
 

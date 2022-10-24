@@ -7,11 +7,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Server {
-    private Map<String, Integer> fortuneCard;
+    private final Map<String, Integer> fortuneCard;
     private byte turn;
     private DatagramSocket send;
     private DatagramSocket receive;
-    private int port;
+    private final int port;
     private ArrayList<Integer> playerPort;
 
     public Server(int port){
@@ -85,19 +85,6 @@ public class Server {
         this.turn = (byte)turn;
     }
 
-    public int countDice(ArrayList<Integer> dice){
-        int score = 0;
-        int skulls = 0;
-        for (Integer die: dice) {
-            if(die == 3){
-                skulls++;
-            }
-        }
-        if(skulls >= 3){
-            return 0;
-        }
-        return score;
-    }
 
 
 }

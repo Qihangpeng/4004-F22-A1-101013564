@@ -138,8 +138,8 @@ public class AppTest
     //die with 3 skulls 5 swords on first roll: player gets a score of 0
     public void row45(){
         ArrayList<Integer> dice = generateDice(3,3,3,5,5,5,5,5);
-        Server s = new Server(4000);
-        assertEquals(0,s.countDice(dice));
+        Player a = new Player(1);
+        assertEquals(0,a.countScore(dice, 9));
     }
 
 
@@ -197,7 +197,33 @@ public class AppTest
         Assertions.assertTrue(a.isDead(result, 0));
     }
 
-    
+    @Test
+    //roll 1 skull, 2 parrots, 3 swords, 2 coins, re-roll parrots get 2 coins
+    //      re-roll 3 swords, get 3 coins (SC 4000 for seq of 8 (with FC coin) + 8x100=800 = 4800)
+    public void row50(){
+        Player a = new Player(1);
+        ArrayList<Integer> dice = generateDice(3, 1,1,4,4,4,0,0);
+        ArrayList<Integer> index = new ArrayList<>();
+        index.add(1);
+        index.add(2);
+        ArrayList<Integer> outcome = new ArrayList<>();
+        outcome.add(0);
+        outcome.add(0);
+        ArrayList<Integer> result = a.re_roll(dice, index, outcome);
+        Assertions.assertFalse(a.isDead(result, 5));
+        index.clear();
+        index.add(3);
+        index.add(4);
+        index.add(5);
+        outcome.clear();
+        outcome.add(0);
+        outcome.add(0);
+        outcome.add(0);
+        result = a.re_roll(result, index, outcome);
+        Assertions.assertFalse(a.isDead(result, 5));
+        assertEquals( 4800,a.countScore(result, 5));
+    }
+
 
 
 
