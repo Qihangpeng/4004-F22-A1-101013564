@@ -115,7 +115,10 @@ public class Player {
                     skulls++;
                 }
             }
-            return skulls >= 3;
+            if(skulls >=3){
+                System.out.println("Player " + this.id + " is dead(" + skulls+" skulls)");
+            }
+            return true;
         }
     }
 
