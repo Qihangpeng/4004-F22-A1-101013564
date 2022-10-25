@@ -84,16 +84,49 @@ public class Player {
 
     //player can re-roll a number of dice
     public ArrayList<Integer> re_roll(ArrayList<Integer> dice, ArrayList<Integer> index){
-        for(int i = 0; i < index.size(); i++){
-            dice.set(i, rollDice());
+        ArrayList<String> reroll = new ArrayList<>();
+        for(int i: index){
+            reroll.add(this.dice.get(dice.get(i)));
         }
+        System.out.print("Player "+ id + " re-rolling dice: " + reroll);
+        for(int i: index){
+            dice.set(i, -1);
+        }
+        ArrayList<Integer> result = new ArrayList<>();
+        for(int i = 0; i < index.size(); i++){
+            result.add(rollDice());
+        }
+        ArrayList<String> resultString = new ArrayList<>();
+        for(int i: result){
+            resultString.add(this.dice.get(i));
+        }
+        System.out.println(", got "+resultString);
+        for(int i: index){
+            dice.remove((Integer) (-1));
+
+        }
+        dice.addAll(result);
         return dice;
     }
 
     //re-roll with cheat, outcome can be specified
     public ArrayList<Integer> re_roll(ArrayList<Integer> dice, ArrayList<Integer> index, ArrayList<Integer> outcome){
-        for(Integer i: index){
-            dice.remove(i);
+        ArrayList<String> reroll = new ArrayList<>();
+        for(int i: index){
+            reroll.add(this.dice.get(dice.get(i)));
+        }
+        System.out.print("Player "+ id + " re-rolling dice: " + reroll);
+        for(int i: index){
+            dice.set(i, -1);
+        }
+        ArrayList<String> resultString = new ArrayList<>();
+        for(int i: outcome){
+            resultString.add(this.dice.get(i));
+        }
+        System.out.println(", got "+resultString);
+        for(int i: index){
+            dice.remove((Integer) (-1));
+
         }
         dice.addAll(outcome);
         return dice;
