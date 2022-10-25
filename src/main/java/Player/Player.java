@@ -248,6 +248,7 @@ public class Player {
                     score+=2000;
                     break;
                 case 8:
+                case 9:
                     score+=4000;
                     break;
             }
@@ -257,7 +258,7 @@ public class Player {
         //full chest
         boolean fullChest = true;
         for(int die: dice){
-            if(die <=3){
+            if(die <=3 && die != 0){
                 fullChest = false;
                 break;
             }

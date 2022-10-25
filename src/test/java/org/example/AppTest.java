@@ -358,6 +358,25 @@ public class AppTest
 
     }
 
+    @Test
+    //score set of 7 parrots and 1 skull on first roll (SC 2100)
+    public void row63(){
+        Player a = new Player(1);
+        ArrayList<Integer> dice = generateDice(1,1,1,1,1,1,1,3);
+        Assertions.assertFalse( a.isDead(dice, 5));
+        assertEquals( 2100,a.countScore(dice, 5));
+
+    }
+
+    @Test
+    //score set of 8 coins on first roll (SC 5400)  seq of 8 + 9 coins(FC is coin) +  full chest  (no extra points for 9 coins)
+    public void row64(){
+        Player a = new Player(1);
+        ArrayList<Integer> dice = generateDice(0,0,0,0,0,0,0,0);
+        Assertions.assertFalse( a.isDead(dice, 4));
+        assertEquals( 5400,a.countScore(dice, 4));
+    }
+
 
 
 
