@@ -292,6 +292,40 @@ public class AppTest
         assertEquals( 400,a.countScore(dice, 5));
     }
 
+    @Test
+    //roll 1 skull, 2 coins/parrots & 3 swords, re-roll parrots, get 1 coin and 1 sword, score (SC = 200+400+200 = 800)
+    public void row58(){
+        Player a = new Player(1);
+        ArrayList<Integer> dice = generateDice(3,1,1,0,0,4,4,4);
+        Assertions.assertFalse( a.isDead(dice, 4));
+        ArrayList<Integer> index = new ArrayList<>();
+        index.add(1);
+        index.add(2);
+        ArrayList<Integer> outcome = new ArrayList<>();
+        outcome.add(0);
+        outcome.add(4);
+        ArrayList<Integer> result = a.re_roll(dice, index, outcome);
+        Assertions.assertFalse( a.isDead(result, 4));
+        assertEquals( 800,a.countScore(result, 4));
+    }
+
+    @Test
+    //same as previous row but with captain fortune card  (SC = (100 + 300 + 200)*2 = 1200)
+    public void row59(){
+        Player a = new Player(1);
+        ArrayList<Integer> dice = generateDice(3,1,1,0,0,4,4,4);
+        Assertions.assertFalse( a.isDead(dice, 1));
+        ArrayList<Integer> index = new ArrayList<>();
+        index.add(1);
+        index.add(2);
+        ArrayList<Integer> outcome = new ArrayList<>();
+        outcome.add(0);
+        outcome.add(4);
+        ArrayList<Integer> result = a.re_roll(dice, index, outcome);
+        Assertions.assertFalse( a.isDead(result, 1));
+        assertEquals( 1200,a.countScore(result, 1));
+    }
+
 
 
 
