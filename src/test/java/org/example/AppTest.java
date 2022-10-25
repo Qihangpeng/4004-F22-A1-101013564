@@ -1,6 +1,8 @@
 package org.example;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 import Player.Player;
 import Server.Server;
 import org.junit.jupiter.api.Assertions;
@@ -229,7 +231,27 @@ public class AppTest
     public void row52(){
         Player a = new Player(1);
         ArrayList<Integer> dice = generateDice(0, 0,1,1,2,2,5,5);
+        Assertions.assertFalse( a.isDead(dice, 1));
         assertEquals( 800,a.countScore(dice, 1));
+
+    }
+
+    @Test
+    //roll 2 (monkeys/skulls/swords/parrots), re-roll parrots and get 1 sword & 1 monkey (SC 300 since FC is coin)
+    public void row53(){
+        Player a = new Player(1);
+        ArrayList<Integer> dice = generateDice(1,1,2,2,3,3,4,4);
+        Assertions.assertFalse( a.isDead(dice, 4));
+
+        ArrayList<Integer> index = new ArrayList<>();
+        index.add(0);
+        index.add(1);
+        ArrayList<Integer> outcome = new ArrayList<>();
+        outcome.add(2);
+        outcome.add(4);
+        ArrayList<Integer> result = a.re_roll(dice, index, outcome);
+        Assertions.assertFalse( a.isDead(result, 4));
+        assertEquals( 300,a.countScore(result, 4));
 
     }
 
