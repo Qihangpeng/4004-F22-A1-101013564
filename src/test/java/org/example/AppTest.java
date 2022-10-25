@@ -255,6 +255,35 @@ public class AppTest
 
     }
 
+    @Test
+    //roll 3 (monkey, swords) + 2 skulls and score   (SC 200)
+    public void row54(){
+        Player a = new Player(1);
+        ArrayList<Integer> dice = generateDice(2,2,2,4,4,4,3,3);
+        Assertions.assertFalse( a.isDead(dice, 0));
+        assertEquals( 200,a.countScore(dice, 0));
+
+    }
+
+    @Test
+    //roll 3 diamonds, 2 skulls, 1 monkey, 1 sword, 1 parrot, score (diamonds = 100 + 300 points)   (SC 400)
+    public void row55(){
+        Player a = new Player(1);
+        ArrayList<Integer> dice = generateDice(5,5,5,3,3,2,4,1);
+        Assertions.assertFalse( a.isDead(dice, 0));
+        assertEquals( 400,a.countScore(dice, 0));
+    }
+
+    @Test
+    //roll 4 coins, 2 skulls, 2 swords and score (coins: 200 + 400 points) with FC is a diamond (SC 700)
+    public void row56(){
+        Player a = new Player(1);
+        ArrayList<Integer> dice = generateDice(0,0,0,0,3,3,4,4);
+        Assertions.assertFalse( a.isDead(dice, 5));
+        assertEquals( 700,a.countScore(dice, 5));
+    }
+    
+
 
 
 
