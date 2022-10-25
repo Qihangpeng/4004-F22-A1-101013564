@@ -210,7 +210,7 @@ public class AppTest
         outcome.add(0);
         outcome.add(0);
         ArrayList<Integer> result = a.re_roll(dice, index, outcome);
-        Assertions.assertFalse(a.isDead(result, 5));
+        Assertions.assertFalse(a.isDead(result, 4));
         index.clear();
         index.add(3);
         index.add(4);
@@ -220,8 +220,17 @@ public class AppTest
         outcome.add(0);
         outcome.add(0);
         result = a.re_roll(result, index, outcome);
-        Assertions.assertFalse(a.isDead(result, 5));
-        assertEquals( 4800,a.countScore(result, 5));
+        Assertions.assertFalse(a.isDead(result, 4));
+        assertEquals( 4800,a.countScore(result, 4));
+    }
+
+    @Test
+    //score first roll with 2 (monkeys/parrot/diamonds/coins) and FC is captain (SC 800)
+    public void row52(){
+        Player a = new Player(1);
+        ArrayList<Integer> dice = generateDice(0, 0,1,1,2,2,5,5);
+        assertEquals( 800,a.countScore(dice, 1));
+
     }
 
 

@@ -126,16 +126,16 @@ public class Player {
         }else{
             int[] list = countDice(dice);
             switch(fc){
-                case 1://treasure chest
-                case 3://Sorceress
-                case 82://2 skulls
-                case 81://1 skull
+                case 0://treasure chest
+                case 2://Sorceress
+                case 72://2 skulls
+                case 71://1 skull
                     score = calculateScore(list);
                     break;
-                case 2://captain
+                case 1://captain
                     score = 2 * calculateScore(list);
                     break;
-                case 44://sea battle with 4 swords, 1000 points
+                case 34://sea battle with 4 swords, 1000 points
                     score = calculateScore(list);
                     if(list[4] == 4){
                         score+=1000;
@@ -143,7 +143,7 @@ public class Player {
                         score-=1000;
                     }
                     break;
-                case 42://sea battle with 2 swords, 300 points
+                case 32://sea battle with 2 swords, 300 points
                     score = calculateScore(list);
                     if(list[4] == 2){
                         score+=300;
@@ -151,7 +151,7 @@ public class Player {
                         score-=300;
                     }
                     break;
-                case 43://sea battle with 3 swords, 500 points
+                case 33://sea battle with 3 swords, 500 points
                     score = calculateScore(list);
                     if(list[4] == 3){
                         score+=500;
@@ -159,15 +159,15 @@ public class Player {
                         score-=500;
                     }
                     break;
-                case 5://gold
+                case 4://gold
                     list[0]+=1;
                     score = calculateScore(list);
                     break;
-                case 6://diamond
+                case 5://diamond
                     list[5]+=1;
                     score = calculateScore(list);
                     break;
-                case 7://Monkey business
+                case 6://Monkey business
                     list[2]+=list[3];
                     list[3] = 0;
                     score = calculateScore(list);
