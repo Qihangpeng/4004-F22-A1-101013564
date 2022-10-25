@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.net.*;
 import java.util.*;
 
+import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.Int;
+
 public class Player {
     private final Map<Byte, String> cards;
     private final Map<Integer, String> dice;
@@ -109,23 +111,39 @@ public class Player {
             }
             if(skulls >=3){
                 System.out.println("Player " + this.id + " is dead(" + skulls+" skulls)");
+                return true;
+            }else{
+                return false;
             }
-            return true;
         }
     }
 
     public int countScore(ArrayList<Integer> dice, int fc){
         int score = 0;
-        int skulls = 0;
-        for (Integer die: dice) {
-            if(die == 3){
-                skulls++;
-            }
-        }
-        if(skulls >= 3){
+
+        if(isDead(dice, fc)){
             return 0;
+        }else{
+            int[] list = countDice(dice);
+            for(int i = 0; i< 8; i++){
+                if(list[i] >=3){
+                    score+=list[i]*100;
+                }
+            }
+
+            return score;
         }
-        return score;
+    }
+
+    public int[] countDice(ArrayList<Integer> dice){
+        int[] list = new int[8];
+        for(int i = 0; i< 8; i++){
+            list[i] = 0;
+        }
+        for(int die: dice){
+            list[die]++;
+        }
+        return list;
     }
 
 
