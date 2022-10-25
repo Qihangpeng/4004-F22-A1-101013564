@@ -163,13 +163,13 @@ public class Player {
                 case 2://Sorceress
                 case 72://2 skulls
                 case 71://1 skull
-                    score = calculateScore(list);
+                    score = calculateScore(list,0);
                     break;
                 case 1://captain
-                    score = 2 * calculateScore(list);
+                    score = 2 * calculateScore(list,1);
                     break;
                 case 34://sea battle with 4 swords, 1000 points
-                    score = calculateScore(list);
+                    score = calculateScore(list,34);
                     if(list[4] == 4){
                         score+=1000;
                     }else{
@@ -177,7 +177,7 @@ public class Player {
                     }
                     break;
                 case 32://sea battle with 2 swords, 300 points
-                    score = calculateScore(list);
+                    score = calculateScore(list,32);
                     if(list[4] == 2){
                         score+=300;
                     }else{
@@ -185,7 +185,7 @@ public class Player {
                     }
                     break;
                 case 33://sea battle with 3 swords, 500 points
-                    score = calculateScore(list);
+                    score = calculateScore(list,33);
                     if(list[4] == 3){
                         score+=500;
                     }else{
@@ -194,16 +194,16 @@ public class Player {
                     break;
                 case 4://gold
                     list[0]+=1;
-                    score = calculateScore(list);
+                    score = calculateScore(list,4);
                     break;
                 case 5://diamond
                     list[5]+=1;
-                    score = calculateScore(list);
+                    score = calculateScore(list,5);
                     break;
                 case 6://Monkey business
                     list[2]+=list[3];
                     list[3] = 0;
-                    score = calculateScore(list);
+                    score = calculateScore(list,6);
                     break;
             }
 
@@ -224,7 +224,7 @@ public class Player {
 
 
     //base value of dice, without skull->die rule and fortune cards rule
-    public int calculateScore(int[] dice){
+    public int calculateScore(int[] dice, int fc){
         int score = 0;
         //count numbers
         for(int i = 0; i< dice.length; i++){
@@ -257,6 +257,12 @@ public class Player {
         score += (dice[0]+dice[5])*100;
         //full chest
         boolean fullChest = true;
+        if(fc == 4){
+            dice[0]--;
+        }
+        if(fc == 5){
+            dice[5]--;
+        }
         for(int die: dice){
             if(die <=3 && die != 0){
                 fullChest = false;

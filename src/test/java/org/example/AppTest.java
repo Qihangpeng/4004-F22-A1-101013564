@@ -377,6 +377,24 @@ public class AppTest
         assertEquals( 5400,a.countScore(dice, 4));
     }
 
+    @Test
+    //score set of 8 coins on first roll and FC is diamond (SC 5400)
+    public void row65(){
+        Player a = new Player(1);
+        ArrayList<Integer> dice = generateDice(0,0,0,0,0,0,0,0);
+        Assertions.assertFalse( a.isDead(dice, 5));
+        assertEquals( 5400,a.countScore(dice, 5));
+    }
+
+    @Test
+    //score set of 8 swords on first roll and FC is captain (SC 4500x2 = 9000) since full chest
+    public void row66(){
+        Player a = new Player(1);
+        ArrayList<Integer> dice = generateDice(4,4,4,4,4,4,4,4);
+        Assertions.assertFalse( a.isDead(dice, 1));
+        assertEquals( 9000,a.countScore(dice, 1));
+    }
+
 
 
 
