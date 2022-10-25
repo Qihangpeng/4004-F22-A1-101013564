@@ -256,22 +256,22 @@ public class AppTest
     }
 
     @Test
-    //roll 3 (monkey, swords) + 2 skulls and score   (SC 200)
+    //roll 3 (monkey, swords) + 2 skulls and score   (SC 300)
     public void row54(){
         Player a = new Player(1);
         ArrayList<Integer> dice = generateDice(2,2,2,4,4,4,3,3);
-        Assertions.assertFalse( a.isDead(dice, 0));
-        assertEquals( 200,a.countScore(dice, 0));
+        Assertions.assertFalse( a.isDead(dice, 4));
+        assertEquals( 300,a.countScore(dice, 4));
 
     }
 
     @Test
-    //roll 3 diamonds, 2 skulls, 1 monkey, 1 sword, 1 parrot, score (diamonds = 100 + 300 points)   (SC 400)
+    //roll 3 diamonds, 2 skulls, 1 monkey, 1 sword, 1 parrot, score (diamonds = 100 + 300 points)   (SC 500)
     public void row55(){
         Player a = new Player(1);
         ArrayList<Integer> dice = generateDice(5,5,5,3,3,2,4,1);
-        Assertions.assertFalse( a.isDead(dice, 0));
-        assertEquals( 400,a.countScore(dice, 0));
+        Assertions.assertFalse( a.isDead(dice, 4));
+        assertEquals( 500,a.countScore(dice, 4));
     }
 
     @Test
@@ -282,7 +282,15 @@ public class AppTest
         Assertions.assertFalse( a.isDead(dice, 5));
         assertEquals( 700,a.countScore(dice, 5));
     }
-    
+
+    @Test
+    //roll 3 swords, 4 parrots, 1 skull and score (SC 100+200+100= 400)
+    public void row57(){
+        Player a = new Player(1);
+        ArrayList<Integer> dice = generateDice(4,4,4,3,1,1,1,1);
+        Assertions.assertFalse( a.isDead(dice, 5));
+        assertEquals( 400,a.countScore(dice, 5));
+    }
 
 
 
