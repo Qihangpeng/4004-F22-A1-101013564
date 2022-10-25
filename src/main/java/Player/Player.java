@@ -125,10 +125,53 @@ public class Player {
             return 0;
         }else{
             int[] list = countDice(dice);
-            for(int i = 0; i< 8; i++){
-                if(list[i] >=3){
-                    score+=list[i]*100;
-                }
+            switch(fc){
+                case 1://treasure chest
+                case 3://Sorceress
+                case 82://2 skulls
+                case 81://1 skull
+                    score = calculateScore(list);
+                    break;
+                case 2://captain
+                    score = 2 * calculateScore(list);
+                    break;
+                case 44://sea battle with 4 swords, 1000 points
+                    score = calculateScore(list);
+                    if(list[4] == 4){
+                        score+=1000;
+                    }else{
+                        score-=1000;
+                    }
+                    break;
+                case 42://sea battle with 2 swords, 300 points
+                    score = calculateScore(list);
+                    if(list[4] == 2){
+                        score+=300;
+                    }else{
+                        score-=300;
+                    }
+                    break;
+                case 43://sea battle with 3 swords, 500 points
+                    score = calculateScore(list);
+                    if(list[4] == 3){
+                        score+=500;
+                    }else{
+                        score-=500;
+                    }
+                    break;
+                case 5://gold
+                    list[0]+=1;
+                    score = calculateScore(list);
+                    break;
+                case 6://diamond
+                    list[5]+=1;
+                    score = calculateScore(list);
+                    break;
+                case 7://Monkey business
+                    list[2]+=list[3];
+                    list[3] = 0;
+                    score = calculateScore(list);
+                    break;
             }
 
             return score;
@@ -136,14 +179,60 @@ public class Player {
     }
 
     public int[] countDice(ArrayList<Integer> dice){
-        int[] list = new int[8];
-        for(int i = 0; i< 8; i++){
+        int[] list = new int[6];
+        for(int i = 0; i< 6; i++){
             list[i] = 0;
         }
         for(int die: dice){
             list[die]++;
         }
         return list;
+    }
+
+
+    //base value of dice, without skull->die rule and fortune cards rule
+    public int calculateScore(int[] dice){
+        int score = 0;
+        //count numbers
+        for(int i = 0; i< dice.length; i++){
+            if(i == 3){
+                continue;
+            }
+            switch (dice[i]){
+                case 3:
+                    score+=100;
+                    break;
+                case 4:
+                    score+=200;
+                    break;
+                case 5:
+                    score+=500;
+                    break;
+                case 6:
+                    score+=1000;
+                    break;
+                case 7:
+                    score+=2000;
+                    break;
+                case 8:
+                    score+=4000;
+                    break;
+            }
+        }
+        //count coins and diamonds
+        score += (dice[0]+dice[5])*100;
+        //full chest
+        boolean fullChest = true;
+        for(int die: dice){
+            if(die <=3){
+                fullChest = false;
+                break;
+            }
+        }
+        if(fullChest){
+            score += 500;
+        }
+        return score;
     }
 
 
