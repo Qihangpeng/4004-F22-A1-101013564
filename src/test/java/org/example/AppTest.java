@@ -86,48 +86,6 @@ public class AppTest
         System.out.println(a.score());
     }
 
-    @Test
-    public void drawCard(){
-        Player a = new Player(1);
-        for(int i = 0; i<10; i++){
-            System.out.println(a.drawCard());
-        }
-    }
-
-    @Test
-    public void rollDice(){
-        Player a = new Player(1);
-        System.out.println(a.rollDice());
-    }
-
-    @Test
-    public void re_roll(){
-        Player a = new Player(1);
-        ArrayList<Integer> dice = new ArrayList<>();
-        Random random = new Random();
-        ArrayList<Integer> index = new ArrayList<>();
-        //generate 8 random roll result
-        for(int i = 0; i < 8; i++){
-            dice.add(a.rollDice());
-        }
-        //generate random number of random indices to re-roll
-        for(int i = 0; i<random.nextInt(8); i++){
-            index.add(random.nextInt(8));
-        }
-        System.out.println("result:          " + dice);
-        System.out.println("re-roll indices: " + index);
-        dice = a.re_roll(dice, index);
-        System.out.println("new result:      " + dice);
-    }
-
-    @Test
-    public void countTurn(){
-        Server s = new Server(4000);
-        System.out.println(s.getTurn());
-        for(int i = 0; i < 20; i++){
-            System.out.println(s.nextTurn());
-        }
-    }
 
     //        dice.put(0, "Coin");
     //        dice.put(1, "parrot");
@@ -141,7 +99,7 @@ public class AppTest
     public void row45(){
         ArrayList<Integer> dice = generateDice(3,3,3,5,5,5,5,5);
         Player a = new Player(1);
-        assertEquals(0,a.countScore(dice, 9));
+        assertEquals(0,a.countScore(dice, 4));
     }
 
 
@@ -159,7 +117,8 @@ public class AppTest
         outcome.add(3);
         outcome.add(4);
         ArrayList<Integer> result = a.re_roll(dice, index, outcome);
-        Assertions.assertTrue(a.isDead(result, 0));
+        Assertions.assertTrue(a.isDead(result, 4));
+        a.playerEnd();
     }
 
     @Test
@@ -175,6 +134,8 @@ public class AppTest
         outcome.add(4);
         ArrayList<Integer> result = a.re_roll(dice, index, outcome);
         Assertions.assertTrue(a.isDead(result, 0));
+        a.playerEnd();
+
     }
 
     @Test
@@ -192,11 +153,13 @@ public class AppTest
         outcome.add(2);
         outcome.add(2);
         ArrayList<Integer> result = a.re_roll(dice, index, outcome);
-        Assertions.assertFalse(a.isDead(result, 0));
+        Assertions.assertFalse(a.isDead(result, 4));
         index.remove(0);
         outcome.remove(1);
         result = a.re_roll(result, index, outcome);
-        Assertions.assertTrue(a.isDead(result, 0));
+        Assertions.assertTrue(a.isDead(result, 4));
+        a.playerEnd();
+
     }
 
     @Test
@@ -225,6 +188,8 @@ public class AppTest
         System.out.println(result);
         Assertions.assertFalse(a.isDead(result, 4));
         assertEquals( 4800,a.countScore(result, 4));
+        a.playerEnd();
+
     }
 
     @Test
@@ -234,6 +199,7 @@ public class AppTest
         ArrayList<Integer> dice = generateDice(0, 0,1,1,2,2,5,5);
         Assertions.assertFalse( a.isDead(dice, 1));
         assertEquals( 800,a.countScore(dice, 1));
+        a.playerEnd();
 
     }
 
@@ -253,6 +219,7 @@ public class AppTest
         ArrayList<Integer> result = a.re_roll(dice, index, outcome);
         Assertions.assertFalse( a.isDead(result, 4));
         assertEquals( 300,a.countScore(result, 4));
+        a.playerEnd();
 
     }
 
@@ -263,6 +230,7 @@ public class AppTest
         ArrayList<Integer> dice = generateDice(2,2,2,4,4,4,3,3);
         Assertions.assertFalse( a.isDead(dice, 4));
         assertEquals( 300,a.countScore(dice, 4));
+        a.playerEnd();
 
     }
 
@@ -273,6 +241,8 @@ public class AppTest
         ArrayList<Integer> dice = generateDice(5,5,5,3,3,2,4,1);
         Assertions.assertFalse( a.isDead(dice, 4));
         assertEquals( 500,a.countScore(dice, 4));
+        a.playerEnd();
+
     }
 
     @Test
@@ -282,6 +252,8 @@ public class AppTest
         ArrayList<Integer> dice = generateDice(0,0,0,0,3,3,4,4);
         Assertions.assertFalse( a.isDead(dice, 5));
         assertEquals( 700,a.countScore(dice, 5));
+        a.playerEnd();
+
     }
 
     @Test
@@ -289,8 +261,10 @@ public class AppTest
     public void row57(){
         Player a = new Player(1);
         ArrayList<Integer> dice = generateDice(4,4,4,3,1,1,1,1);
-        Assertions.assertFalse( a.isDead(dice, 5));
-        assertEquals( 400,a.countScore(dice, 5));
+        Assertions.assertFalse( a.isDead(dice, 4));
+        assertEquals( 400,a.countScore(dice, 4));
+        a.playerEnd();
+
     }
 
     @Test
@@ -308,6 +282,8 @@ public class AppTest
         ArrayList<Integer> result = a.re_roll(dice, index, outcome);
         Assertions.assertFalse( a.isDead(result, 4));
         assertEquals( 800,a.countScore(result, 4));
+        a.playerEnd();
+
     }
 
     @Test
@@ -325,6 +301,8 @@ public class AppTest
         ArrayList<Integer> result = a.re_roll(dice, index, outcome);
         Assertions.assertFalse( a.isDead(result, 1));
         assertEquals( 1200,a.countScore(result, 1));
+        a.playerEnd();
+
     }
 
     @Test
@@ -341,11 +319,13 @@ public class AppTest
         outcome.add(3);
         outcome.add(4);
         dice = a.re_roll(dice, index, outcome);
-        Assertions.assertFalse( a.isDead(dice, 5));
+        Assertions.assertFalse( a.isDead(dice, 4));
         outcome.set(0,2);
         outcome.set(1,4);
         dice = a.re_roll(dice, index, outcome);
-        assertEquals( 600,a.countScore(dice, 5));
+        assertEquals( 600,a.countScore(dice, 4));
+        a.playerEnd();
+
     }
 
     @Test
@@ -353,8 +333,10 @@ public class AppTest
     public void row62(){
         Player a = new Player(1);
         ArrayList<Integer> dice = generateDice(2,2,2,2,2,2,3,3);
-        Assertions.assertFalse( a.isDead(dice, 5));
-        assertEquals( 1100,a.countScore(dice, 5));
+        Assertions.assertFalse( a.isDead(dice, 4));
+        assertEquals( 1100,a.countScore(dice, 4));
+        a.playerEnd();
+
 
     }
 
@@ -363,8 +345,10 @@ public class AppTest
     public void row63(){
         Player a = new Player(1);
         ArrayList<Integer> dice = generateDice(1,1,1,1,1,1,1,3);
-        Assertions.assertFalse( a.isDead(dice, 5));
-        assertEquals( 2100,a.countScore(dice, 5));
+        Assertions.assertFalse( a.isDead(dice, 4));
+        assertEquals( 2100,a.countScore(dice, 4));
+        a.playerEnd();
+
 
     }
 
@@ -375,6 +359,8 @@ public class AppTest
         ArrayList<Integer> dice = generateDice(0,0,0,0,0,0,0,0);
         Assertions.assertFalse( a.isDead(dice, 4));
         assertEquals( 5400,a.countScore(dice, 4));
+        a.playerEnd();
+
     }
 
     @Test
@@ -384,6 +370,8 @@ public class AppTest
         ArrayList<Integer> dice = generateDice(0,0,0,0,0,0,0,0);
         Assertions.assertFalse( a.isDead(dice, 5));
         assertEquals( 5400,a.countScore(dice, 5));
+        a.playerEnd();
+
     }
 
     @Test
@@ -393,6 +381,66 @@ public class AppTest
         ArrayList<Integer> dice = generateDice(4,4,4,4,4,4,4,4);
         Assertions.assertFalse( a.isDead(dice, 1));
         assertEquals( 9000,a.countScore(dice, 1));
+        a.playerEnd();
+
+    }
+
+    @Test
+    //roll 6 monkeys and 2 swords, re-roll swords, get 2 monkeys, score (SC 4600 because of FC is coin and full chest)
+    public void row67(){
+        Player a = new Player(1);
+        ArrayList<Integer> dice = generateDice(2,2,2,2,2,2,4,4);
+        Assertions.assertFalse( a.isDead(dice, 4));
+        ArrayList<Integer> index = new ArrayList<>();
+        index.add(6);
+        index.add(7);
+        ArrayList<Integer> outcome = new ArrayList<>();
+        outcome.add(2);
+        outcome.add(2);
+        dice = a.re_roll(dice, index, outcome);
+        Assertions.assertFalse( a.isDead(dice, 4));
+        assertEquals( 4600,a.countScore(dice, 4));
+        a.playerEnd();
+
+    }
+
+    @Test
+    //roll 2 (monkeys/skulls/swords/parrots), re-roll parrots, get 2 diamonds, score with FC is diamond (SC 400)
+    public void row68(){
+        Player a = new Player(1);
+        ArrayList<Integer> dice = generateDice(1,1,2,2,3,3,4,4);
+        Assertions.assertFalse( a.isDead(dice, 5));
+        ArrayList<Integer> index = new ArrayList<>();
+        index.add(0);
+        index.add(1);
+        ArrayList<Integer> outcome = new ArrayList<>();
+        outcome.add(5);
+        outcome.add(5);
+        dice = a.re_roll(dice, index, outcome);
+        Assertions.assertFalse( a.isDead(dice, 5));
+        assertEquals( 400,a.countScore(dice, 5));
+        a.playerEnd();
+
+    }
+
+    @Test
+    //roll 2 (monkeys, skulls, swords), 1 diamond, 1 parrot, re-roll 2 monkeys, get 2 diamonds, score 500
+    public void row69(){
+        Player a = new Player(1);
+        ArrayList<Integer> dice = generateDice(2,2,3,3,4,4,5,1);
+        Assertions.assertFalse( a.isDead(dice, 5));
+        ArrayList<Integer> index = new ArrayList<>();
+        index.add(0);
+        index.add(1);
+        ArrayList<Integer> outcome = new ArrayList<>();
+        outcome.add(5);
+        outcome.add(5);
+        dice = a.re_roll(dice, index, outcome);
+        Assertions.assertFalse( a.isDead(dice, 4));
+        assertEquals( 500,a.countScore(dice, 4));
+        a.playerEnd();
+
+
     }
 
 
