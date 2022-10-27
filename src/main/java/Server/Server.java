@@ -69,43 +69,64 @@ public class Server {
             for(int i = 0; i< 8; i++){
                 rolled.add(rollDice());
             }
+            //display player roll
+            System.out.print("Player rolled: ");
+            for(int i =0; i<8;i++){
+                System.out.printf("%10s", this.dice.get(rolled.get(i)));
+            }
+            System.out.println();
             if(isDead(rolled, fc)){
                 msg[2] = 1;
             }else{
                 msg[2] = 0;
             }
-            for(int i = 2; i<10;i++){
-                msg[i] = (byte)(int)rolled.get(i-2);
+            for(int i = 3; i<11;i++){
+                msg[i] = (byte)(int)rolled.get(i-3);
             }
             broadcast(msg);
+            if(isDead(rolled, fc)){
+                System.out.println("Player "+ this.turn+ " is dead, starting next turn");
+                continue;
+            }
             //wait for player respond(re-roll)
-            while(msg[2]!=1){
-                try{
-                    //first byte = 0 means is don't re-roll, first byte = 1 means re-roll. second byte =1 means player's dead
-                    // following bytes are the dice
-                    //that player wants to re-roll
-                    byte[] message = new byte[9];
-                    DatagramPacket receivePacket = new DatagramPacket(message, message.length);
-                    receive.receive(receivePacket);
-                    if(receivePacket.getData()[0] == 0){
-                        break;
-                    }else{
-                        ArrayList<Integer> index = new ArrayList<>();
-                        for(int i = 1; i< 9; i++){
-                            index.add((int) receivePacket.getData()[i]);
-                        }
-                        rolled = re_roll(rolled, index);
-                        msg[0] = getTurn();
-                        for(int i = 1; i< 9;i++){
-                            msg[i] = (byte)(int)rolled.get(i-1);
-                        }
-                        broadcast(msg);
+            byte[] choice = receive(1);
+            broadcast(choice);
+            while(choice[0]!=2){
+                //receive 9 bytes that indicate which dice to re-roll
+                System.out.println("Player "+ this.turn+" re-rolling");
+                byte[] message = receive(8);
+
+                ArrayList<Integer> index = new ArrayList<>();
+                for(int i = 0; i< 8; i++){
+                    if(message[i] >=0) {
+                        index.add((int) message[i]);
                     }
-                } catch (IOException e) {
+                }
+                rolled = re_roll(rolled, index);
+                for(int i = 0; i< 8;i++){
+                    msg[i] = (byte)(int)rolled.get(i);
+                }
+                //send new result to everyone
+                broadcast(msg);
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                //check if player is dead with new result
+                byte[] dead = new byte[1];
+                if(isDead(rolled, fc)){
+                    dead[0] = 1;
+                }
+                broadcast(dead);
+                if(dead[0] == 1){
+                    break;
+                }
+                //wait for user to decide if they want to re-roll again
+                choice = receive(1);
+                broadcast(choice);
             }
-            //player decided not to re-roll or died
+
             int turnScore = countScore(rolled, fc);
             score[getTurn()]+=turnScore;
 
@@ -129,22 +150,11 @@ public class Server {
             System.out.println("Player " + receivePacket.getData()[0] +" (port: "+ (receivePacket.getData()[0]+4000) +")  has connected to server");
             playerPort.add((int)receivePacket.getData()[0] + port);
         }
-        System.out.println(playerPort);
+        byte[] msg = new byte[1];
+        msg[0] = 1;
+        broadcast(msg);
     }
 
-
-    public void start(){
-        for(int port: playerPort){
-            byte[] msg = new byte[1];
-            msg[0] = 1;
-            try{
-                DatagramPacket sendPacket = new DatagramPacket(msg, msg.length, InetAddress.getLocalHost(), port);
-                send.send(sendPacket);
-            }catch(IOException e){
-                System.out.println(e);
-            }
-        }
-    }
 
     public byte nextTurn(){
         turn++;
@@ -364,25 +374,74 @@ public class Server {
 
     public int drawCard(){
         Random random = new Random();
-        byte card = (byte)random.nextInt(11);
-        if(this.deck[card] == 0){
-            drawCard();
-        }else{
-            this.deck[card]--;
-            System.out.println("Player " + getTurn() + " draw fortune card " + fortuneCard.get(card));
-            return card;
+        while(true){
+            int card = random.nextInt(11);
+            if(this.deck[card] > 0){
+                this.deck[card]--;
+                switch(card){
+                    case 0:
+                        card = 1;
+                        break;
+                    case 1:
+                        card = 2;
+                        break;
+                    case 2:
+                        card = 3;
+                        break;
+                    case 3:
+                        card = 42;
+                        break;
+                    case 4:
+                        card = 43;
+                        break;
+                    case 5:
+                        card = 44;
+                        break;
+                    case 6:
+                        card = 5;
+                        break;
+                    case 7:
+                        card = 6;
+                        break;
+                    case 8:
+                        card = 7;
+                        break;
+                    case 9:
+                        card = 81;
+                        break;
+                    case 10:
+                        card = 82;
+                        break;
+
+                }
+                System.out.println("Player " + getTurn() + " draw fortune card :" + fortuneCard.get(card));
+                return card;
+            }
         }
-        return 0;
+
     }
 
     public void broadcast(byte[] msg){
         try{
             for(int p: playerPort){
                 DatagramPacket sendPacket = new DatagramPacket(msg,msg.length,InetAddress.getLocalHost(), p);
+                send.send(sendPacket);
             }
-        } catch (UnknownHostException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public byte[] receive(int length){
+        byte[] msg = new byte[length];
+        try{
+            DatagramPacket receivePacket = new DatagramPacket(msg, length);
+            receive.receive(receivePacket);
+            return receivePacket.getData();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 
