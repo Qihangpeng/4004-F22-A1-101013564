@@ -417,6 +417,56 @@ public class AppTest
         assertEquals( 500,s.countScore(dice, 4));
     }
 
+    @Test
+    //roll 1 skull, 2 coins, 1 (monkey/parrot), 3 swords, re-roll 3 swords, get 1 (coin/monkey/parrot)  (SC 600)
+    public void row70(){
+        Server s = new Server(4000, false);
+        ArrayList<Integer> dice = generateDice(3, 0, 0, 1, 2, 4, 4, 4);
+        Assertions.assertFalse( s.isDead(dice, 4));
+        ArrayList<Integer> index = new ArrayList<>();
+        index.add(5);
+        index.add(6);
+        index.add(7);
+        ArrayList<Integer> outcome = new ArrayList<>();
+        outcome.add(0);
+        outcome.add(1);
+        outcome.add(2);
+        dice = s.re_roll(dice, index, outcome);
+        Assertions.assertFalse( s.isDead(dice, 4));
+        assertEquals( 600,s.countScore(dice, 4));
+    }
+
+    @Test
+    //roll 1 skull, 2 coins, 1 (monkey/parrot), 3 swords,
+    // re-roll swords, get 1 (coin/monkey/parrot) with FC is diamond (SC 500)
+    public void row71(){
+        Server s = new Server(4000, false);
+        ArrayList<Integer> dice = generateDice(3,0,0,1,2,4,4,4);
+        Assertions.assertFalse( s.isDead(dice, 5));
+        ArrayList<Integer> index = new ArrayList<>();
+        index.add(5);
+        index.add(6);
+        index.add(7);
+        ArrayList<Integer> outcome = new ArrayList<>();
+        outcome.add(0);
+        outcome.add(1);
+        outcome.add(2);
+        dice = s.re_roll(dice, index, outcome);
+        Assertions.assertFalse( s.isDead(dice, 5));
+        assertEquals( 500,s.countScore(dice, 5));
+    }
+
+    @Test
+    //get 4 monkeys, 2 coins and 2 skulls with FC coin. Score 600
+    public void row72(){
+        Server s = new Server(4000, false);
+        ArrayList<Integer> dice = generateDice(0,0,3,3,2,2,2,2);
+        Assertions.assertFalse( s.isDead(dice, 4));
+        assertEquals( 600,s.countScore(dice, 4));
+    }
+
+
+
 
 
 
