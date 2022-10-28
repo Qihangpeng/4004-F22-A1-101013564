@@ -43,6 +43,7 @@ public class AppTest
             public void run() {
                 Server s = new Server(4000, false);
                 s.connect();
+                s.close();
             }
         });
         Thread at = new Thread(new Runnable() {
@@ -50,18 +51,21 @@ public class AppTest
             public void run() {
                 Player a = new Player(1);
                 a.connect();
+                a.close();
             }
         });Thread bt = new Thread(new Runnable() {
             @Override
             public void run() {
                 Player b = new Player(2);
                 b.connect();
+                b.close();
             }
         });Thread ct = new Thread(new Runnable() {
             @Override
             public void run() {
                 Player c = new Player(3);
                 c.connect();
+                c.close();
             }
         });
         st.start();
@@ -84,7 +88,9 @@ public class AppTest
     public void score(){
         Player a = new Player(1);
         System.out.println(a.score());
+        a.close();
     }
+    
 
 
     //        dice.put(0, "Coin");
@@ -100,6 +106,8 @@ public class AppTest
         ArrayList<Integer> dice = generateDice(3,3,3,5,5,5,5,5);
         Server s = new Server(4000, false);
         assertEquals(0,s.countScore(dice, 4));
+        s.close();
+
     }
 
 
@@ -118,6 +126,8 @@ public class AppTest
         outcome.add(4);
         ArrayList<Integer> result = s.re_roll(dice, index, outcome);
         Assertions.assertTrue(s.isDead(result, 4));
+        s.close();
+
     }
 
     @Test
@@ -133,6 +143,8 @@ public class AppTest
         outcome.add(4);
         ArrayList<Integer> result = s.re_roll(dice, index, outcome);
         Assertions.assertTrue(s.isDead(result, 0));
+        s.close();
+
 
     }
 
@@ -156,6 +168,7 @@ public class AppTest
         outcome.remove(1);
         result = s.re_roll(result, index, outcome);
         Assertions.assertTrue(s.isDead(result, 4));
+        s.close();
 
     }
 
@@ -185,6 +198,8 @@ public class AppTest
         System.out.println(result);
         Assertions.assertFalse(s.isDead(result, 4));
         assertEquals( 4800,s.countScore(result, 4));
+        s.close();
+
     }
 
     @Test
@@ -194,6 +209,8 @@ public class AppTest
         ArrayList<Integer> dice = generateDice(0, 0,1,1,2,2,5,5);
         Assertions.assertFalse( s.isDead(dice, 1));
         assertEquals( 800,s.countScore(dice, 1));
+        s.close();
+
     }
 
     @Test
@@ -212,6 +229,7 @@ public class AppTest
         ArrayList<Integer> result = s.re_roll(dice, index, outcome);
         Assertions.assertFalse( s.isDead(result, 4));
         assertEquals( 300,s.countScore(result, 4));
+        s.close();
 
     }
 
@@ -222,6 +240,7 @@ public class AppTest
         ArrayList<Integer> dice = generateDice(2,2,2,4,4,4,3,3);
         Assertions.assertFalse( s.isDead(dice, 4));
         assertEquals( 300,s.countScore(dice, 4));
+        s.close();
 
     }
 
@@ -232,6 +251,7 @@ public class AppTest
         ArrayList<Integer> dice = generateDice(5,5,5,3,3,2,4,1);
         Assertions.assertFalse( s.isDead(dice, 4));
         assertEquals( 500,s.countScore(dice, 4));
+        s.close();
 
     }
 
@@ -242,6 +262,7 @@ public class AppTest
         ArrayList<Integer> dice = generateDice(0,0,0,0,3,3,4,4);
         Assertions.assertFalse( s.isDead(dice, 5));
         assertEquals( 700,s.countScore(dice, 5));
+        s.close();
 
     }
 
@@ -252,6 +273,7 @@ public class AppTest
         ArrayList<Integer> dice = generateDice(4,4,4,3,1,1,1,1);
         Assertions.assertFalse( s.isDead(dice, 4));
         assertEquals( 400,s.countScore(dice, 4));
+        s.close();
 
     }
 
@@ -270,6 +292,7 @@ public class AppTest
         ArrayList<Integer> result = s.re_roll(dice, index, outcome);
         Assertions.assertFalse( s.isDead(result, 4));
         assertEquals( 800,s.countScore(result, 4));
+        s.close();
 
     }
 
@@ -288,6 +311,7 @@ public class AppTest
         ArrayList<Integer> result = s.re_roll(dice, index, outcome);
         Assertions.assertFalse( s.isDead(result, 1));
         assertEquals( 1200,s.countScore(result, 1));
+        s.close();
 
     }
 
@@ -310,6 +334,7 @@ public class AppTest
         outcome.set(1,4);
         dice = s.re_roll(dice, index, outcome);
         assertEquals( 600,s.countScore(dice, 4));
+        s.close();
 
     }
 
@@ -318,8 +343,9 @@ public class AppTest
     public void row62(){
         Server s = new Server(4000, false);
         ArrayList<Integer> dice = generateDice(2,2,2,2,2,2,3,3);
-        Assertions.assertFalse( s.isDead(dice, 4));
-        assertEquals( 1100,s.countScore(dice, 4));
+        Assertions.assertFalse( s.isDead(dice, 5));
+        assertEquals( 1100,s.countScore(dice, 5));
+        s.close();
 
 
     }
@@ -329,8 +355,9 @@ public class AppTest
     public void row63(){
         Server s = new Server(4000, false);
         ArrayList<Integer> dice = generateDice(1,1,1,1,1,1,1,3);
-        Assertions.assertFalse( s.isDead(dice, 4));
-        assertEquals( 2100,s.countScore(dice, 4));
+        Assertions.assertFalse( s.isDead(dice, 5));
+        assertEquals( 2100,s.countScore(dice, 5));
+        s.close();
 
     }
 
@@ -339,8 +366,9 @@ public class AppTest
     public void row64(){
         Server s = new Server(4000, false);
         ArrayList<Integer> dice = generateDice(0,0,0,0,0,0,0,0);
-        Assertions.assertFalse( s.isDead(dice, 4));
-        assertEquals( 5400,s.countScore(dice, 4));
+        Assertions.assertFalse( s.isDead(dice, 5));
+        assertEquals( 5400,s.countScore(dice, 5));
+        s.close();
 
     }
 
@@ -351,6 +379,7 @@ public class AppTest
         ArrayList<Integer> dice = generateDice(0,0,0,0,0,0,0,0);
         Assertions.assertFalse( s.isDead(dice, 5));
         assertEquals( 5400,s.countScore(dice, 5));
+        s.close();
 
     }
 
@@ -361,6 +390,7 @@ public class AppTest
         ArrayList<Integer> dice = generateDice(4,4,4,4,4,4,4,4);
         Assertions.assertFalse( s.isDead(dice, 1));
         assertEquals( 9000,s.countScore(dice, 1));
+        s.close();
 
     }
 
@@ -379,6 +409,7 @@ public class AppTest
         dice = s.re_roll(dice, index, outcome);
         Assertions.assertFalse( s.isDead(dice, 4));
         assertEquals( 4600,s.countScore(dice, 4));
+        s.close();
 
     }
 
@@ -397,6 +428,7 @@ public class AppTest
         dice = s.re_roll(dice, index, outcome);
         Assertions.assertFalse( s.isDead(dice, 5));
         assertEquals( 400,s.countScore(dice, 5));
+        s.close();
 
     }
 
@@ -415,6 +447,8 @@ public class AppTest
         dice = s.re_roll(dice, index, outcome);
         Assertions.assertFalse( s.isDead(dice, 4));
         assertEquals( 500,s.countScore(dice, 4));
+        s.close();
+
     }
 
     @Test
@@ -434,6 +468,8 @@ public class AppTest
         dice = s.re_roll(dice, index, outcome);
         Assertions.assertFalse( s.isDead(dice, 4));
         assertEquals( 600,s.countScore(dice, 4));
+        s.close();
+
     }
 
     @Test
@@ -454,6 +490,8 @@ public class AppTest
         dice = s.re_roll(dice, index, outcome);
         Assertions.assertFalse( s.isDead(dice, 5));
         assertEquals( 500,s.countScore(dice, 5));
+        s.close();
+
     }
 
     @Test
@@ -463,8 +501,34 @@ public class AppTest
         ArrayList<Integer> dice = generateDice(0,0,3,3,2,2,2,2);
         Assertions.assertFalse( s.isDead(dice, 4));
         assertEquals( 600,s.countScore(dice, 4));
+        s.close();
     }
 
+    @Test
+    //roll 2 diamonds, 1 (sword/monkey/coin), 3 parrots, re-roll 3 parrots, get 1 skull, 2 monkeys, re-roll skull, get monkey (SC 500)
+    public void row77(){
+        Server s = new Server(4000, false);
+        ArrayList<Integer> dice = generateDice(5,5,4,2,0,1,1,1);
+        Assertions.assertFalse( s.isDead(dice, 1));
+        ArrayList<Integer> index = new ArrayList<>();
+        index.add(5);
+        index.add(6);
+        index.add(7);
+        ArrayList<Integer> outcome = new ArrayList<>();
+        outcome.add(3);
+        outcome.add(2);
+        outcome.add(2);
+        dice = s.re_roll(dice, index, outcome);
+        Assertions.assertFalse( s.isDead(dice, 4));
+        index.clear();
+        index.add(5);
+        outcome.clear();
+        outcome.add(2);
+        dice = s.re_roll(dice, index, outcome);
+        Assertions.assertFalse( s.isDead(dice, 1));
+        assertEquals( 500,s.countScore(dice, 2));
+        s.close();
+    }
 
 
 

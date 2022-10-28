@@ -49,8 +49,9 @@ public class Server {
         this.port = port;
         try{
             send = new DatagramSocket();
+            receive = new DatagramSocket(port, InetAddress.getLocalHost());
             System.out.println("Server is running at port: " + port);
-        } catch (SocketException e) {
+        } catch (SocketException | UnknownHostException e) {
             e.printStackTrace();
         }
         playerPort = new ArrayList<>();
@@ -134,11 +135,6 @@ public class Server {
     }
 
     public void connect(){
-        try {
-            receive = new DatagramSocket(port, InetAddress.getLocalHost());
-        } catch (SocketException | UnknownHostException e) {
-            e.printStackTrace();
-        }
         for(int i = 0; i< 3; i++){
             byte[] msg = new byte[1];
             DatagramPacket receivePacket = new DatagramPacket(msg, msg.length);
@@ -290,7 +286,7 @@ public class Server {
                     score = calculateScore(list, 6);
                     break;
             }
-
+            System.out.println("Player scored "+ score +" this round.");
             return score;
         }
     }
@@ -442,6 +438,10 @@ public class Server {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void close(){
+        this.receive.close();
     }
 
 
