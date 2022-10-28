@@ -664,6 +664,15 @@ public class AppTest
         assertEquals( 0,s.countScore(dice, 72));
     }
 
+    @Test
+    //roll 2 skulls and 6 swords with FC with 1 skull  => die
+    public void row107(){
+        Server s = new Server(4000, false);
+        ArrayList<Integer> dice = generateDice(3,3,4,4,4,4,4,4);
+        Assertions.assertTrue( s.isDead(dice, 71));
+        assertEquals( 0,s.countScore(dice, 71));
+    }
+
 
 
 
