@@ -208,8 +208,11 @@ public class Server {
         if(fc == 5){
             dice[5]--;
         }
-        for(int die: dice){
-            if(die <=3 && die != 0){
+        for(int i = 0; i<6; i++){
+            if(i == 0 || i == 5){
+                continue;
+            }
+            if(dice[i] <= 3 && dice[i] != 0){
                 fullChest = false;
                 break;
             }

@@ -587,9 +587,26 @@ public class AppTest
         Assertions.assertFalse( s.isDead(dice, 6));
         assertEquals( 1100,s.countScore(dice, 6));
         s.close();
-
-
     }
+
+    @Test
+    //roll 2 (monkeys/swords/parrots/coins), re-roll 2 swords, get 1 monkey, 1 parrot, score 1700
+    public void row83(){
+        Server s = new Server(4000, false);
+        ArrayList<Integer> dice = generateDice(1,1,4,4,2,2,0,0);
+        Assertions.assertFalse( s.isDead(dice, 6));
+        ArrayList<Integer> index = new ArrayList<>();
+        ArrayList<Integer> outcome = new ArrayList<>();
+        index.add(2);
+        index.add(3);
+        outcome.add(1);
+        outcome.add(2);
+        dice = s.re_roll(dice, index, outcome);
+        Assertions.assertFalse( s.isDead(dice, 6));
+        assertEquals( 1700,s.countScore(dice, 6));
+        s.close();
+    }
+
 
 
 
