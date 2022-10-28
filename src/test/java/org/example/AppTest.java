@@ -607,6 +607,16 @@ public class AppTest
         s.close();
     }
 
+    @Test
+    //roll 3 skulls, 3 monkeys, 2 parrots => die scoring 0
+    public void row84(){
+        Server s = new Server(4000, false);
+        ArrayList<Integer> dice = generateDice(3,3,3,2,2,2,1,1);
+        Assertions.assertTrue( s.isDead(dice, 6));
+        assertEquals( 0,s.countScore(dice, 6));
+
+    }
+
 
 
 
