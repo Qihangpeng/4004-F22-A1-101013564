@@ -636,6 +636,16 @@ public class AppTest
         assertEquals( 1800,s.countScore(dice, 1));
     }
 
+    @Test
+    //3 monkeys, 4 swords, 1 diamond, FC: coin   => SC 1000  (ie 100++200+100+100+bonus)
+    public void row99(){
+        Server s = new Server(4000, false);
+        ArrayList<Integer> dice = generateDice(2,2,2,4,4,4,4,5);
+        Assertions.assertFalse( s.isDead(dice, 4));
+        assertEquals( 1000,s.countScore(dice, 4));
+
+    }
+
 
 
 
