@@ -90,7 +90,7 @@ public class AppTest
         System.out.println(a.score());
         a.close();
     }
-    
+
 
 
     //        dice.put(0, "Coin");
@@ -530,7 +530,14 @@ public class AppTest
         s.close();
     }
 
+    @Test
+    //roll 3 skulls, 3 parrots, 2 swords, re-roll skull, get parrot, re-roll 2 swords, get parrots, score (SC 1000)
+    public void row78(){
+        Server s = new Server(4000, false);
+        ArrayList<Integer> dice = generateDice(5,5,4,2,0,1,1,1);
+        Assertions.assertFalse( s.isDead(dice, 1));
 
+    }
 
 
 

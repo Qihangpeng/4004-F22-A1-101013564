@@ -31,17 +31,17 @@ public class Server {
         dice.put(4,"Swords");
         dice.put(5, "Diamond");
         fortuneCard = new HashMap<>();
-        fortuneCard.put(1, "Treasure Chest");
-        fortuneCard.put(2, "Captain");
-        fortuneCard.put(3, "Sorceress");
-        fortuneCard.put(42, "Sea Battle(2 swords, 300");
-        fortuneCard.put(43, "Sea Battle(3 swords, 500");
-        fortuneCard.put(44, "Sea Battle(4 swords, 1000");
-        fortuneCard.put(5, "Gold");
-        fortuneCard.put(6, "Diamond");
-        fortuneCard.put(7, "Monkey Business");
-        fortuneCard.put(81, "One Skull");
-        fortuneCard.put(82, "Two Skulls");
+        fortuneCard.put(0, "Treasure Chest");
+        fortuneCard.put(1, "Captain");
+        fortuneCard.put(2, "Sorceress");
+        fortuneCard.put(32, "Sea Battle(2 swords, 300");
+        fortuneCard.put(33, "Sea Battle(3 swords, 500");
+        fortuneCard.put(34, "Sea Battle(4 swords, 1000");
+        fortuneCard.put(4, "Gold");
+        fortuneCard.put(5, "Diamond");
+        fortuneCard.put(6, "Monkey Business");
+        fortuneCard.put(71, "One Skull");
+        fortuneCard.put(72, "Two Skulls");
 
         turn = 0;
         deck = new int[]{4,4,4,2,2,2,4,4,4,3,2};
@@ -376,37 +376,37 @@ public class Server {
                 this.deck[card]--;
                 switch(card){
                     case 0:
-                        card = 1;
+                        card = 0;
                         break;
                     case 1:
-                        card = 2;
+                        card = 1;
                         break;
                     case 2:
-                        card = 3;
+                        card = 2;
                         break;
                     case 3:
-                        card = 42;
+                        card = 32;
                         break;
                     case 4:
-                        card = 43;
+                        card = 33;
                         break;
                     case 5:
-                        card = 44;
+                        card = 34;
                         break;
                     case 6:
-                        card = 5;
+                        card = 4;
                         break;
                     case 7:
-                        card = 6;
+                        card = 5;
                         break;
                     case 8:
-                        card = 7;
+                        card = 6;
                         break;
                     case 9:
-                        card = 81;
+                        card = 71;
                         break;
                     case 10:
-                        card = 82;
+                        card = 72;
                         break;
 
                 }

@@ -17,20 +17,22 @@ public class Player {
     private final int id;
     private final int port;
     private ArrayList<Integer> scoreCard;
+    private boolean token;
     public Player(int id){
+        token = false;
         fc = 0;
         fortuneCard = new HashMap<>();
-        fortuneCard.put(1, "Treasure Chest");
-        fortuneCard.put(2, "Captain");
-        fortuneCard.put(3, "Sorceress");
-        fortuneCard.put(42, "Sea Battle(2 swords, 300");
-        fortuneCard.put(43, "Sea Battle(3 swords, 500");
-        fortuneCard.put(44, "Sea Battle(4 swords, 1000");
-        fortuneCard.put(5, "Gold");
-        fortuneCard.put(6, "Diamond");
-        fortuneCard.put(7, "Monkey Business");
-        fortuneCard.put(81, "One Skull");
-        fortuneCard.put(82, "Two Skulls");
+        fortuneCard.put(0, "Treasure Chest");
+        fortuneCard.put(1, "Captain");
+        fortuneCard.put(2, "Sorceress");
+        fortuneCard.put(32, "Sea Battle(2 swords, 300)");
+        fortuneCard.put(33, "Sea Battle(3 swords, 500)");
+        fortuneCard.put(34, "Sea Battle(4 swords, 1000)");
+        fortuneCard.put(4, "Gold");
+        fortuneCard.put(5, "Diamond");
+        fortuneCard.put(6, "Monkey Business");
+        fortuneCard.put(71, "One Skull");
+        fortuneCard.put(72, "Two Skulls");
         scoreCard = new ArrayList<>();
         dice = new HashMap<>();
         dice.put(0, "Coin");
@@ -75,10 +77,17 @@ public class Player {
             if(yourTurn){
                 //player's turn
                 System.out.println("it is your turn to play");
+                fc = msg[1];
+                if(fc == 2){
+                    token = true;
+                }
+
                 System.out.println("Fortune card: " + fortuneCard.get((int)msg[1]));
                 ArrayList<String> dice = new ArrayList<>();
+                ArrayList<Integer> diceArray = new ArrayList<>();
                 for(int i = 3; i<11; i++){
                     dice.add(this.dice.get((int)msg[i]));
+                    diceArray.add((int)msg[i]);
                 }
                 System.out.println("You rolled: "+ dice);
 
@@ -88,15 +97,15 @@ public class Player {
                     //player is not dead, ask if player want to re-roll
                     System.out.println("Do you wish to Re-roll our dice?");
                     System.out.println("1) Yes    2) No");
-                    Scanner input = new Scanner(System.in);
+                    Scanner scanner = new Scanner(System.in);
                     byte[] choice = new byte[1];
-                    choice[0] = input.nextByte();
-                    input.nextLine();//consume \n
+                    choice[0] = scanner.nextByte();
+                    scanner.nextLine();//consume \n
                     sendToServer(choice);
                     receiveMessage(1);
                     while(choice[0] == 1){
                         //player choose to re-roll
-                        System.out.println("Please input the index of the dice you want to re-roll(separated by space: ");
+                        System.out.println("Please input the index of the dice you want to re-roll(separated by space): ");
                         for(int i = 0; i< 8; i++){
                             System.out.printf("%10s", dice.get(i));
                         }
@@ -107,15 +116,25 @@ public class Player {
                         }
                         System.out.println();
                         //format indices of dice to re-roll and send to server
-                        String[] index = input.nextLine().split(" ");
+                        String input = scanner.nextLine();
+                        String[] index = input.split(" ");
                         byte[] reroll = new byte[8];
-                        for(int i = 0; i< index.length; i++){
-                            if(!index[i].equals("")){
-                                reroll[i] = (byte) Integer.parseInt(index[i]);
+                        if(input.equals("")){
+                            for(int i = 0; i< 8; i++){
+                                reroll[i] = -1;
+                            }
+                        }else{
+                            for(int i = 0; i< index.length; i++){
+                                if(!index[i].equals("")){
+                                    reroll[i] = (byte) Integer.parseInt(index[i]);
+                                }
+                            }
+                            for(int i = index.length; i < 8; i++){
+                                reroll[i] = -1;
                             }
                         }
-                        for(int i = index.length; i < 8; i++){
-                            reroll[i] = -1;
+                        if(!validateReroll(diceArray, reroll, fc)){
+                            continue;
                         }
                         System.out.println();
                         sendToServer(reroll);
@@ -132,8 +151,8 @@ public class Player {
                         }
                         System.out.println("Do you wish to re-roll again?");
                         System.out.println("1) Yes    2) No");
-                        choice[0] = input.nextByte();
-                        input.nextLine();
+                        choice[0] = scanner.nextByte();
+                        scanner.nextLine();
                         sendToServer(choice);
                         receiveMessage(1);
                     }
@@ -196,6 +215,52 @@ public class Player {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    //make sure player cannot re-roll skull if fc is not sorceress, and can only re-roll 1 skull if fc is sorceress
+    public boolean validateReroll(ArrayList<Integer> dice, byte[] index, int fc){
+        boolean valid = true;
+        int skulls = 0;
+        int count = 0;
+        for(int i: index){
+            if(i>=0){
+                if(dice.get(i) == 3){
+                    skulls++;
+                }
+                count++;
+            }
+
+        }
+        if(fc != 2){
+            if(skulls != 0){
+                System.out.println("You cannot re-roll skulls unless you have fc: sorceress");
+                valid = false;
+            }
+            if(count==1){
+                System.out.println("You have to re-roll at least 2 dice at once");
+                valid = false;
+            }
+        }else{
+            if(skulls >=2){
+                System.out.println("You can only re-roll one skull");
+                valid = false;
+            }
+            if(!token){
+                System.out.println("You have already re-rolled a skull");
+                valid = false;
+            }
+            if(count==1 && skulls !=1){
+                System.out.println("You have to re-roll at least two dice at once, unless you are re-rolling skull");
+                valid = false;
+            }
+        }
+        //re-rolling a skull, consume token
+        if(valid){
+            if(skulls ==1){
+                this.token = false;
+            }
+        }
+        return valid;
     }
 
     public void close(){
