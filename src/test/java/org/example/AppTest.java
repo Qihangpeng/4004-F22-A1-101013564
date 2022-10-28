@@ -618,6 +618,24 @@ public class AppTest
     }
 
 
+    @Test
+    //3 monkeys, 3 swords, 1 diamond, 1 parrot FC: coin   => SC 400  (ie no bonus)
+    public void row97(){
+        Server s = new Server(4000, false);
+        ArrayList<Integer> dice = generateDice(2,2,2,4,4,4,5,1);
+        Assertions.assertFalse( s.isDead(dice, 4));
+        assertEquals( 400,s.countScore(dice, 4));
+    }
+
+    @Test
+    //3 monkeys, 3 swords, 2 coins FC: captain   => SC (100+100+200+500)*2 =  1800
+    public void row98(){
+        Server s = new Server(4000, false);
+        ArrayList<Integer> dice = generateDice(2,2,2,4,4,4,0,0);
+        Assertions.assertFalse( s.isDead(dice, 1));
+        assertEquals( 1800,s.countScore(dice, 1));
+    }
+
 
 
 

@@ -212,7 +212,7 @@ public class Server {
             if(i == 0 || i == 5){
                 continue;
             }
-            if(dice[i] <= 3 && dice[i] != 0){
+            if(dice[i] < 3 && dice[i] != 0){
                 fullChest = false;
                 break;
             }
