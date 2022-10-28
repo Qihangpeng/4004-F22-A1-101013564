@@ -646,6 +646,15 @@ public class AppTest
 
     }
 
+    @Test
+    //FC: monkey business and roll 2 monkeys, 1 parrot, 2 coins, 3 diamonds   SC 1200
+    public void row103(){
+        Server s = new Server(4000, false);
+        ArrayList<Integer> dice = generateDice(2,2,1,0,0,5,5,5);
+        Assertions.assertFalse( s.isDead(dice, 6));
+        assertEquals( 1200,s.countScore(dice, 6));
+    }
+
 
 
 
