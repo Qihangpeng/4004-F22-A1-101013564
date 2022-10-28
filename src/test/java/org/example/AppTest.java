@@ -673,6 +673,28 @@ public class AppTest
         assertEquals( 0,s.countScore(dice, 71));
     }
 
+    @Test
+    //roll 2 skulls  3(parrots/monkeys) with FC with two skulls: re-roll 3 parrots get 2 skulls, 1 sword
+    //  re-roll sword and 3 monkeys, get 3 skulls and 1 sword, stop => -900 for other players (no negative score) & you score 0
+    public void row109(){
+        Server s = new Server(4000, false);
+        ArrayList<Integer> dice = generateDice(3,3,1,1,1,2,2,2);
+        Assertions.assertFalse( s.isDead(dice, 72));
+        ArrayList<Integer> index = new ArrayList<>();
+        ArrayList<Integer> outcome = new ArrayList<>();
+        index.add(1);
+        index.add(2);
+        index.add(3);
+        outcome.add(3);
+        outcome.add(3);
+        outcome.add(4);
+        dice = s.re_roll(dice, index, outcome);
+        Assertions.assertFalse( s.isDead(dice, 72));
+        index.add(7);
+        dice = s.re_roll(dice, index, outcome);
+        Assertions.assertFalse( s.isDead(dice, 72));
+        assertEquals( 0,s.countScore(dice, 72));
+    }
 
 
 
