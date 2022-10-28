@@ -299,11 +299,17 @@ public class Server {
         if(fc == 2){
             return false;
         }else{
+
             int skulls = 0;
             for(Integer die: dice){
                 if(die == 3){
                     skulls++;
                 }
+            }
+            if(fc == 71){
+                skulls++;
+            }else if(fc == 72){
+                skulls +=2;
             }
             if(skulls >=3){
                 System.out.println("Player " + getTurn() + " is dead(" + skulls+" skulls)");

@@ -660,8 +660,8 @@ public class AppTest
     public void row106(){
         Server s = new Server(4000, false);
         ArrayList<Integer> dice = generateDice(3,4,4,4,4,4,4,4);
-        Assertions.assertFalse( s.isDead(dice, 72));
-        assertEquals( 1200,s.countScore(dice, 72));
+        Assertions.assertTrue( s.isDead(dice, 72));
+        assertEquals( 0,s.countScore(dice, 72));
     }
 
 
