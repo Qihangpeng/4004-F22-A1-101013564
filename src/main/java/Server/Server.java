@@ -282,8 +282,8 @@ public class Server {
                     score = calculateScore(list, 5);
                     break;
                 case 6://Monkey business
-                    list[2] += list[3];
-                    list[3] = 0;
+                    list[1] += list[2];
+                    list[2] = 0;
                     score = calculateScore(list, 6);
                     break;
             }

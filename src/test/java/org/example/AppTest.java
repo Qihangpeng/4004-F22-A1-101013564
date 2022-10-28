@@ -579,6 +579,19 @@ public class AppTest
     }
 
 
+    @Test
+    //roll 3 monkeys 3 parrots  1 skull 1 coin  SC = 1100  (i.e., sequence of of 6 + coin)
+    public void row82(){
+        Server s = new Server(4000, false);
+        ArrayList<Integer> dice = generateDice(2,2,2,1,1,1,3,0);
+        Assertions.assertFalse( s.isDead(dice, 6));
+        assertEquals( 1100,s.countScore(dice, 6));
+        s.close();
+
+
+    }
+
+
 
 
 
