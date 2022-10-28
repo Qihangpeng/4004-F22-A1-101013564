@@ -534,9 +534,22 @@ public class AppTest
     //roll 3 skulls, 3 parrots, 2 swords, re-roll skull, get parrot, re-roll 2 swords, get parrots, score (SC 1000)
     public void row78(){
         Server s = new Server(4000, false);
-        ArrayList<Integer> dice = generateDice(5,5,4,2,0,1,1,1);
-        Assertions.assertFalse( s.isDead(dice, 1));
-
+        ArrayList<Integer> dice = generateDice(3, 3, 3, 1, 1, 1, 4, 4);
+        Assertions.assertFalse( s.isDead(dice, 2));
+        ArrayList<Integer> index = new ArrayList<>();
+        index.add(0);
+        ArrayList<Integer> outcome = new ArrayList<>();
+        outcome.add(1);
+        dice = s.re_roll(dice, index, outcome);
+        Assertions.assertFalse( s.isDead(dice, 2));
+        index.clear();
+        index.add(6);
+        index.add(5);
+        outcome.add(1);
+        dice = s.re_roll(dice, index, outcome);
+        Assertions.assertFalse( s.isDead(dice, 2));
+        assertEquals( 1000,s.countScore(dice, 2));
+        s.close();
     }
 
 

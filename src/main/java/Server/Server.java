@@ -240,6 +240,7 @@ public class Server {
             int[] list = countDice(dice);
             switch (fc) {
                 case 0://treasure chest
+                case 8://used sorceress
                 case 2://Sorceress
                 case 72://2 skulls
                 case 71://1 skull
@@ -292,7 +293,7 @@ public class Server {
     }
 
     public Boolean isDead(ArrayList<Integer> dice, int fc){
-        if(fc == 7){
+        if(fc == 2){
             return false;
         }else{
             int skulls = 0;
@@ -315,6 +316,9 @@ public class Server {
         ArrayList<String> reroll = new ArrayList<>();
         for(int i: index){
             reroll.add(this.dice.get(dice.get(i)));
+            if(dice.get(i) == 3 && this.fc == 2){
+                this.fc = 8;
+            }
         }
         System.out.print("Player "+ getTurn() + " re-rolling dice: " + reroll);
         for(int i: index){
@@ -345,6 +349,9 @@ public class Server {
         ArrayList<String> reroll = new ArrayList<>();
         for(int i: index){
             reroll.add(this.dice.get(dice.get(i)));
+            if(dice.get(i) == 3 && this.fc == 2){
+                this.fc = 8;
+            }
         }
         System.out.print("Player "+ getTurn() + " re-rolling dice: " + reroll);
         for(int i: index){
