@@ -682,15 +682,16 @@ public class AppTest
         Assertions.assertFalse( s.isDead(dice, 72));
         ArrayList<Integer> index = new ArrayList<>();
         ArrayList<Integer> outcome = new ArrayList<>();
-        index.add(1);
         index.add(2);
         index.add(3);
+        index.add(4);
         outcome.add(3);
         outcome.add(3);
         outcome.add(4);
         dice = s.re_roll(dice, index, outcome);
         Assertions.assertFalse( s.isDead(dice, 72));
         index.add(7);
+        outcome.add(3);
         dice = s.re_roll(dice, index, outcome);
         Assertions.assertFalse( s.isDead(dice, 72));
         assertEquals( 0,s.countScore(dice, 72));

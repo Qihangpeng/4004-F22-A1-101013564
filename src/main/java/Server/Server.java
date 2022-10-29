@@ -241,12 +241,15 @@ public class Server {
             return 0;
         } else {
             int[] list = countDice(dice);
+            //counting island of dead
+            int skulls = list[3];
+            System.out.println(dice);
+
+            //normal score
             switch (fc) {
                 case 0://treasure chest
                 case 8://used sorceress
                 case 2://Sorceress
-                case 72://2 skulls
-                case 71://1 skull
                     score = calculateScore(list, 0);
                     break;
                 case 1://captain
@@ -289,8 +292,31 @@ public class Server {
                     list[2] = 0;
                     score = calculateScore(list, 6);
                     break;
+                case 72://2 skulls
+                    score = calculateScore(list, 72);
+                    skulls+=2;
+                    break;
+                case 71://1 skull
+                    score = calculateScore(list, 71);
+                    skulls++;
+                    break;
+
+            }
+            if(skulls >=4){
+                int reduce = skulls * -100;
+                System.out.println("Player entered island of the dead("+skulls+" skulls), other players reduce "+reduce+" points");
+                for(int i = 0; i<3; i++){
+                    if(i != this.turn){
+                        this.score[i]-=reduce;
+                    }
+                    if(this.score[i] <0){
+                        this.score[i] = 0;
+                    }
+                }
+                return 0;
             }
             System.out.println("Player scored "+ score +" this round.");
+
             return score;
         }
     }
@@ -311,7 +337,7 @@ public class Server {
             }else if(fc == 72){
                 skulls +=2;
             }
-            if(skulls >=3){
+            if(skulls ==3){
                 System.out.println("Player " + getTurn() + " is dead(" + skulls+" skulls)");
                 return true;
             }else{
