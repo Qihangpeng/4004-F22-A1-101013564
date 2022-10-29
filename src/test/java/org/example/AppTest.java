@@ -839,5 +839,25 @@ public class AppTest
         s.close();
     }
 
+    @Test
+    //FC 2 swords, roll 4 monkeys 1 sword, 1 skull & 2 parrots
+    //  then re-roll 2 parrots and get 1 sword and 1 skull   SC = 200 +  300 = 500
+    public void row119(){
+        Server s = new Server(4000, false);
+        s.setFc(32);
+        ArrayList<Integer> dice = generateDice(2,2,2,2,4,3,1,1);
+        Assertions.assertFalse( s.isDead(dice, 32));
+        ArrayList<Integer> index = new ArrayList<>();
+        ArrayList<Integer> outcome = new ArrayList<>();
+        index.add(6);
+        index.add(7);
+        outcome.add(3);
+        outcome.add(4);
+        dice = s.re_roll(dice, index, outcome);
+        Assertions.assertFalse( s.isDead(dice, 32));
+        assertEquals( 500,s.countScore(dice, 32));
+        s.close();
+    }
+
 
 }
