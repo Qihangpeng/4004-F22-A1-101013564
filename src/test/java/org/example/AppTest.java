@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -82,6 +83,36 @@ public class AppTest
             e.printStackTrace();
         }
         ct.start();
+    }
+
+    @Test
+    public void rollDice(){
+        Server s = new Server(4000, false);
+        System.out.println(s.rollDice());
+        s.close();
+    }
+
+    @Test
+    public void re_roll(){
+        Server s = new Server(4000, false);
+        ArrayList<Integer> dice = generateDice(s.rollDice(),s.rollDice(),s.rollDice(),s.rollDice(),s.rollDice(),s.rollDice(),s.rollDice(),s.rollDice());
+        ArrayList<Integer> index = generateDice(0,1,2,3,4,5,6,7);
+        dice = s.re_roll(dice, index);
+        System.out.println(dice);
+    }
+
+    @Test
+    public void countDice(){
+        Server s = new Server(4000, false);
+        ArrayList<Integer> dice = generateDice(s.rollDice(),s.rollDice(),s.rollDice(),s.rollDice(),s.rollDice(),s.rollDice(),s.rollDice(),s.rollDice());
+        System.out.println(Arrays.toString(s.countDice(dice)));
+    }
+
+    @Test
+    public void countScore(){
+        Server s = new Server(4000, false);
+        ArrayList<Integer> dice = generateDice(s.rollDice(),s.rollDice(),s.rollDice(),s.rollDice(),s.rollDice(),s.rollDice(),s.rollDice(),s.rollDice());
+        System.out.println(s.countScore(dice, 0));
     }
 
     @Test
