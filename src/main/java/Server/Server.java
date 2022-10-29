@@ -225,6 +225,11 @@ public class Server {
             if(i == 0 || i == 5){
                 continue;
             }
+            if(i == 4){
+                if(dice[i] >=2){
+                    continue;
+                }
+            }
             if(dice[i] < 3 && dice[i] != 0){
                 fullChest = false;
                 break;
@@ -249,7 +254,6 @@ public class Server {
 
     public int countScore(ArrayList<Integer> dice, int fc) {
         int score = 0;
-
         if (isDead(dice, fc)) {
             switch(fc){
                 case 32:
@@ -280,7 +284,7 @@ public class Server {
                     break;
                 case 34://sea battle with 4 swords, 1000 points
                     score = calculateScore(list, 34);
-                    if (list[4] == 4) {
+                    if (list[4] >= 4) {
                         score += 1000;
                     } else {
                         score -= 1000;
@@ -288,7 +292,7 @@ public class Server {
                     break;
                 case 32://sea battle with 2 swords, 300 points
                     score = calculateScore(list, 32);
-                    if (list[4] == 2) {
+                    if (list[4] >= 2) {
                         score += 300;
                     } else {
                         score -= 300;
@@ -296,7 +300,7 @@ public class Server {
                     break;
                 case 33://sea battle with 3 swords, 500 points
                     score = calculateScore(list, 33);
-                    if (list[4] == 3) {
+                    if (list[4] >= 3) {
                         score += 500;
                     } else {
                         score -= 500;
