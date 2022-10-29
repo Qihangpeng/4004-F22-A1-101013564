@@ -251,7 +251,18 @@ public class Server {
         int score = 0;
 
         if (isDead(dice, fc)) {
-            return 0;
+            switch(fc){
+                case 32:
+                    score = -300;
+                    break;
+                case 33:
+                    score = -500;
+                    break;
+                case 34:
+                    score = -1000;
+                    break;
+            }
+
         } else {
             int[] list = countDice(dice);
             //counting island of dead
@@ -328,12 +339,12 @@ public class Server {
                         this.score[i] = 0;
                     }
                 }
-                return 0;
+                score = 0;
             }
-            System.out.println("Player scored "+ score +" this round.");
-
-            return score;
         }
+        System.out.println("Player scored "+ score +" this round.");
+
+        return score;
     }
 
     public Boolean isDead(ArrayList<Integer> dice, int fc){
