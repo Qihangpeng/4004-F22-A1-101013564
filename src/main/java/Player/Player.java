@@ -70,7 +70,7 @@ public class Player {
         return sum;
     }
 
-    public void play(){
+    public void play(boolean cheat, ArrayList<ArrayList<Integer>> command){
         while(true){
             byte[] msg = receiveMessage(12);
             boolean yourTurn = (msg[0] == this.id);
@@ -276,5 +276,9 @@ public class Player {
 
     public void close(){
         receive.close();
+    }
+    public ArrayList<ArrayList<Integer>> nextCommand(ArrayList<ArrayList<Integer>> command){
+        command.remove(0);
+        return command;
     }
 }

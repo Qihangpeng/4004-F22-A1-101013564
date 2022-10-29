@@ -1,5 +1,6 @@
 package Player;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class playerMain {
@@ -9,6 +10,6 @@ public class playerMain {
         int id = input.nextInt();
         Player player = new Player((byte)id);
         player.connect();
-        player.play();
+        player.play(false, new ArrayList<ArrayList<Integer>>());
     }
 }

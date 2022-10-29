@@ -60,7 +60,7 @@ public class Server {
 
     }
 
-    public void gameStart(){
+    public void gameStart(boolean cheat, ArrayList<ArrayList<Integer>> input){
         while(true){
             nextTurn();
             rolled.clear();
