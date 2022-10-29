@@ -969,4 +969,87 @@ public class AppTest
         s.close();
     }
 
+    @Test
+    //player1 rolls 7 swords + 1 skull with FC captain (gets 4000 points - could win)
+    //then player2 rolls 7 swords 1 skull  with FC 1 skull (2000)
+    //then player3 scores 0 (3 skulls, 5 monkeys, FC coin) => game stops and declares player 1 wins
+    public void row132(){
+        Thread st = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Server s = new Server(4000, false);
+                s.connect();
+                ArrayList<ArrayList<Integer>> command = new ArrayList<>();
+                ArrayList<Integer> fc1 = new ArrayList<>();
+                fc1.add(1);
+                ArrayList<Integer> dice1 = generateDice(4,4,4,4,4,4,4,3);
+                ArrayList<Integer> fc2 = new ArrayList<>();
+                fc2.add(71);
+                ArrayList<Integer> dice2 = generateDice(4,4,4,4,4,4,4,3);
+                ArrayList<Integer> fc3 = new ArrayList<>();
+                fc2.add(4);
+                ArrayList<Integer> dice3 = generateDice(3,3,3,2,2,2,2,2);
+                command.add(fc1);
+                command.add(dice1);
+                command.add(fc2);
+                command.add(dice2);
+                command.add(fc3);
+                command.add(dice3);
+                s.gameStart(true, command);
+                s.close();
+            }
+        });
+        Thread at = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Player a = new Player(1);
+                a.connect();
+                ArrayList<ArrayList<Integer>> command = new ArrayList<>();
+                ArrayList<Integer> choice = new ArrayList<>();
+                choice.add(2);
+                command.add(choice);
+                a.play(true, command);
+                a.close();
+            }
+        });Thread bt = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Player b = new Player(2);
+                b.connect();
+                ArrayList<ArrayList<Integer>> command = new ArrayList<>();
+                ArrayList<Integer> choice = new ArrayList<>();
+                choice.add(2);
+                command.add(choice);
+                b.play(true, command);
+                b.close();
+            }
+        });Thread ct = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Player c = new Player(3);
+                c.connect();
+                ArrayList<ArrayList<Integer>> command = new ArrayList<>();
+                ArrayList<Integer> choice = new ArrayList<>();
+                choice.add(2);
+                command.add(choice);
+                c.play(true, command);
+                c.close();
+            }
+        });
+        st.start();
+        at.start();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        bt.start();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        ct.start();
+    }
+
 }

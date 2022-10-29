@@ -67,6 +67,7 @@ public class Server {
             //send player turn, first dice roll, and fortune card to everyone
             byte[] msg = new byte[11];
             msg[0] = getTurn();
+            //if cheat, draw card, else, use the card specified
             this.fc = drawCard();
             msg[1] = (byte) fc;
             for(int i = 0; i< 8; i++){
