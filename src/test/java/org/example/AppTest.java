@@ -904,7 +904,7 @@ public class AppTest
     @Test
     //FC 3 swords, roll 4 monkeys 2 swords 2 skulls
     //         then re-roll 4 monkeys and get  2 skulls and 2 swords   => die and lose 500 points
-    public void row121(){
+    public void row122(){
         Server s = new Server(4000, false);
         s.setFc(33);
         ArrayList<Integer> dice = generateDice(2,2,2,2,3,3,4,4);
@@ -926,5 +926,47 @@ public class AppTest
     }
 
 
+    @Test
+    //FC 4 swords, roll 3 monkeys 4 swords 1 skull  SC = 100 +200 + 1000 = 1300
+    public void row123(){
+        Server s = new Server(4000, false);
+        s.setFc(34);
+        ArrayList<Integer> dice = generateDice(2,2,2,4,4,4,4,3);
+        Assertions.assertFalse( s.isDead(dice, 34));
+        assertEquals( 1300,s.countScore(dice, 34));
+        s.close();
+    }
+
+    @Test
+    //FC 4 swords, roll 3 monkeys, 1 sword, 1 skull, 1 diamond, 2 parrots
+    //  then re-roll 2 parrots and get 2 swords thus you have 3 monkeys, 3 swords, 1 diamond, 1 skull
+    //  then re-roll 3 monkeys and get  1 sword and 2 parrots  SC = 200 + 100 + 1000 = 1300
+    public void row126(){
+        Server s = new Server(4000, false);
+        s.setFc(34);
+        ArrayList<Integer> dice = generateDice(2,2,2,4,3,5,1,1);
+        Assertions.assertFalse( s.isDead(dice, 34));
+        ArrayList<Integer> index = new ArrayList<>();
+        ArrayList<Integer> outcome = new ArrayList<>();
+        index.add(6);
+        index.add(7);
+        outcome.add(4);
+        outcome.add(4);
+        dice = s.re_roll(dice, index, outcome);
+        Assertions.assertFalse( s.isDead(dice, 34));
+
+        index.clear();
+        outcome.clear();
+        index.add(0);
+        index.add(1);
+        index.add(2);
+        outcome.add(4);
+        outcome.add(1);
+        outcome.add(1);
+        dice = s.re_roll(dice, index, outcome);
+        Assertions.assertFalse( s.isDead(dice, 34));
+        assertEquals( 1300,s.countScore(dice, 34));
+        s.close();
+    }
 
 }
