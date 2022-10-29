@@ -698,6 +698,26 @@ public class AppTest
     }
 
 
+    @Test
+    //roll 5 skulls, 3 monkeys with FC Captain, re-roll 3 monkeys, get 2 skulls, 1 coin, stop => -1400 for other players
+    public void row110(){
+        Server s = new Server(4000, false);
+        ArrayList<Integer> dice = generateDice(3,3,3,3,3,2,2,2);
+        Assertions.assertFalse( s.isDead(dice, 1));
+        ArrayList<Integer> index = new ArrayList<>();
+        ArrayList<Integer> outcome = new ArrayList<>();
+        index.add(5);
+        index.add(6);
+        index.add(7);
+        outcome.add(3);
+        outcome.add(3);
+        outcome.add(0);
+        dice = s.re_roll(dice, index, outcome);
+        Assertions.assertFalse( s.isDead(dice, 1));
+        assertEquals( 0,s.countScore(dice, 1));
+
+    }
+
 
 
 }

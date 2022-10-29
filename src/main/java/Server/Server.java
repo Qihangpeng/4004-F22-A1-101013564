@@ -243,7 +243,6 @@ public class Server {
             int[] list = countDice(dice);
             //counting island of dead
             int skulls = list[3];
-            System.out.println(dice);
 
             //normal score
             switch (fc) {
@@ -304,6 +303,9 @@ public class Server {
             }
             if(skulls >=4){
                 int reduce = skulls * -100;
+                if(fc == 1){
+                    reduce*=2;
+                }
                 System.out.println("Player entered island of the dead("+skulls+" skulls), other players reduce "+reduce+" points");
                 for(int i = 0; i<3; i++){
                     if(i != this.turn){
