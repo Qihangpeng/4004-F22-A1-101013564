@@ -859,5 +859,17 @@ public class AppTest
         s.close();
     }
 
+    @Test
+    //FC 3 swords, roll 3 monkeys 4 swords 1 skull SC = 100 + 200 + 500 = 800
+    public void row120(){
+        Server s = new Server(4000, false);
+        s.setFc(33);
+        ArrayList<Integer> dice = generateDice(2,2,2,4,4,4,4,3);
+        Assertions.assertFalse( s.isDead(dice, 33));
+        assertEquals( 800,s.countScore(dice, 33));
+        s.close();
+    }
+
+
 
 }
