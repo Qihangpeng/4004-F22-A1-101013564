@@ -901,6 +901,30 @@ public class AppTest
         s.close();
     }
 
+    @Test
+    //FC 3 swords, roll 4 monkeys 2 swords 2 skulls
+    //         then re-roll 4 monkeys and get  2 skulls and 2 swords   => die and lose 500 points
+    public void row121(){
+        Server s = new Server(4000, false);
+        s.setFc(33);
+        ArrayList<Integer> dice = generateDice(2,2,2,2,3,3,4,4);
+        Assertions.assertFalse( s.isDead(dice, 33));
+        ArrayList<Integer> index = new ArrayList<>();
+        ArrayList<Integer> outcome = new ArrayList<>();
+        index.add(0);
+        index.add(1);
+        index.add(2);
+        index.add(3);
+        outcome.add(3);
+        outcome.add(3);
+        outcome.add(4);
+        outcome.add(4);
+        dice = s.re_roll(dice, index, outcome);
+        Assertions.assertFalse( s.isDead(dice, 33));
+        assertEquals( -500,s.countScore(dice, 33));
+        s.close();
+    }
+
 
 
 }
