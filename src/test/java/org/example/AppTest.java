@@ -770,7 +770,28 @@ public class AppTest
         Assertions.assertTrue( s.isDead(dice, 32));
         assertEquals( -300,s.countScore(dice, 32));
         s.close();
+    }
 
+    @Test
+    //FC 3 swords, have 2 swords, 2 skulls and 4 parrots, re-roll 4 parrots, get 4 skulls=> die and lose 500 points
+    public void row115(){
+        Server s = new Server(4000, false);
+        ArrayList<Integer> dice = generateDice(4,4,3,3,1,1,1,1);
+        Assertions.assertFalse( s.isDead(dice, 33));
+        ArrayList<Integer> index = new ArrayList<>();
+        ArrayList<Integer> outcome = new ArrayList<>();
+        index.add(4);
+        index.add(5);
+        index.add(6);
+        index.add(7);
+        outcome.add(3);
+        outcome.add(3);
+        outcome.add(3);
+        outcome.add(3);
+        dice = s.re_roll(dice, index, outcome);
+        Assertions.assertFalse( s.isDead(dice, 33));
+        assertEquals( -500,s.countScore(dice, 33));
+        s.close();
     }
 
 

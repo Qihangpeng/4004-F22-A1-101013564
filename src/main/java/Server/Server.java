@@ -325,7 +325,8 @@ public class Server {
                     break;
 
             }
-            if(skulls >=4){
+            //island of dead, cannot enter island of dead if fc is swords
+            if(skulls >=4 && fc != 32 && fc != 33 && fc != 34 ){
                 int reduce = skulls * -100;
                 if(fc == 1){
                     reduce*=2;
