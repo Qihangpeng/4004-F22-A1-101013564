@@ -20,8 +20,10 @@ public class Server {
     private ArrayList<Integer> rolled;
     private int[] score;
     private boolean canReroll;
+    private int countDown;
 
     public Server(int port, Boolean test){
+        countDown = 3;
         canReroll = true;
         score = new int[3];
         rolled = new ArrayList<>();
@@ -60,7 +62,9 @@ public class Server {
 
     }
 
-    public void gameStart(boolean cheat, ArrayList<ArrayList<Integer>> input){
+    public void gameStart(boolean cheat, ArrayList<ArrayList<Integer>> command){
+        System.out.println(command);
+
         while(true){
             nextTurn();
             rolled.clear();
@@ -68,10 +72,22 @@ public class Server {
             byte[] msg = new byte[11];
             msg[0] = getTurn();
             //if cheat, draw card, else, use the card specified
-            this.fc = drawCard();
+            if(cheat){
+                this.fc = command.get(0).get(0);
+                command = nextCommand(command);
+            }else{
+                this.fc = drawCard();
+            }
             msg[1] = (byte) fc;
-            for(int i = 0; i< 8; i++){
-                rolled.add(rollDice());
+
+            //determine dice depending on cheat
+            if(cheat){
+                rolled = command.get(0);
+                command = nextCommand(command);
+            }else{
+                for(int i = 0; i< 8; i++){
+                    rolled.add(rollDice());
+                }
             }
             //display player roll
             System.out.print("Player rolled: ");
@@ -88,8 +104,11 @@ public class Server {
                 msg[i] = (byte)(int)rolled.get(i-3);
             }
             broadcast(msg);
-            if(isDead(rolled, fc)){
+            if(msg[2] == 1){
                 System.out.println("Player "+ this.turn+ " is dead, starting next turn");
+                if(sendScore() == 0){
+                    break;
+                }
                 continue;
             }
             //wait for player respond(re-roll)
@@ -142,10 +161,19 @@ public class Server {
                 broadcast(choice);
             }
 
-            int turnScore = countScore(rolled, fc);
-            score[getTurn()]+=turnScore;
 
+
+            if(sendScore() == 0){
+                break;
+            }
         }
+        int winner = 1;
+        for(int i = 0; i<3; i++){
+            if (score[i] > score[winner-1]){
+                winner = i+1;
+            }
+        }
+        System.out.println("Player "+ winner+ " won the game");
     }
 
     public void connect(){
@@ -570,6 +598,42 @@ public class Server {
 
     public void setFc(int fc){
         this.fc = fc;
+    }
+
+    public ArrayList<ArrayList<Integer>> nextCommand(ArrayList<ArrayList<Integer>> command){
+        command.remove(0);
+        return command;
+    }
+
+    public int sendScore(){
+        int turnScore = countScore(rolled, fc);
+        System.out.println("---------------");
+        score[getTurn()-1]+=turnScore;
+        boolean ending = false;
+        for(int playerScore: score){
+            if (playerScore >= 3000) {
+                ending = true;
+                break;
+            }
+        }
+        if(ending){
+            countDown--;
+            System.out.println(countDown);
+        }
+        byte[] scoreByte = new byte[3];
+        for(int i = 0; i< 3; i++){
+            scoreByte[i] = (byte)(this.score[i]/100);
+        }
+        broadcast(scoreByte);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if(countDown == 0){
+            System.out.println("game ended");
+        }
+        return countDown;
     }
 
 }

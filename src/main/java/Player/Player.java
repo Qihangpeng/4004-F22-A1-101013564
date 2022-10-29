@@ -97,10 +97,17 @@ public class Player {
                     //player is not dead, ask if player want to re-roll
                     System.out.println("Do you wish to Re-roll our dice?");
                     System.out.println("1) Yes    2) No");
-                    Scanner scanner = new Scanner(System.in);
+                    //use cheat command or player input
                     byte[] choice = new byte[1];
-                    choice[0] = scanner.nextByte();
-                    scanner.nextLine();//consume \n
+                    Scanner scanner = new Scanner(System.in);
+                    if(cheat){
+                        choice[0] = (byte)(int)command.get(0).get(0);
+                        command = nextCommand(command);
+
+                    }else{
+                        choice[0] = scanner.nextByte();
+                        scanner.nextLine();//consume \n
+                    }
                     sendToServer(choice);
                     receiveMessage(1);
                     while(choice[0] == 1){
@@ -202,7 +209,16 @@ public class Player {
                 }
             }
             //calculate score
-
+            byte[] score = receiveMessage(3);
+            int[] newScore = new int[3];
+            for(int i =0; i< 3; i++){
+                newScore[i] = score[i] *100;
+            }
+            System.out.println("________________________________________");
+            System.out.println("| Player |    1    |    2    |    3    |");
+            System.out.println("----------------------------------------");
+            System.out.printf( "| Score  |   %4d  |  %4d   |  %4d   |\n", newScore[0], newScore[1], newScore[2]);
+            System.out.println("----------------------------------------");
         }
     }
 

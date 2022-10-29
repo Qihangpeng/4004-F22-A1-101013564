@@ -987,7 +987,7 @@ public class AppTest
                 fc2.add(71);
                 ArrayList<Integer> dice2 = generateDice(4,4,4,4,4,4,4,3);
                 ArrayList<Integer> fc3 = new ArrayList<>();
-                fc2.add(4);
+                fc3.add(4);
                 ArrayList<Integer> dice3 = generateDice(3,3,3,2,2,2,2,2);
                 command.add(fc1);
                 command.add(dice1);
@@ -1050,6 +1050,11 @@ public class AppTest
             e.printStackTrace();
         }
         ct.start();
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }
