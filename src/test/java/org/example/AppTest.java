@@ -1057,4 +1057,118 @@ public class AppTest
         }
     }
 
+    @Test
+    //player1 rolls 7 swords + 1 skull with FC captain (gets 4000 points - could win)
+    //then player2 scores 0 (3 skulls, 5 monkeys, FC coin)
+    //then player3 rolls 6 skulls & 2 parrots with FC  Captain, then stops => deduction of (600x2)= 1200 points
+    //      => score of player1 goes to 2800, scoreof player 2 stays at 0
+    //then player 1 rolls 4 monkeys, 4 parrots with FC coin, scores 1000 points to get him to 3800 (again can win)
+    //then player2 scores 0 (3 skulls, 5 monkeys, FC Captain) and player3 scores 0 (2 skulls, 6 monkeys, FC 1 skull)
+    //player 1 wins
+    public void row140(){
+        Thread st = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Server s = new Server(4000, false);
+                s.connect();
+                ArrayList<ArrayList<Integer>> command = new ArrayList<>();
+                ArrayList<Integer> fc1 = new ArrayList<>();
+                fc1.add(1);
+                ArrayList<Integer> dice1 = generateDice(4,4,4,4,4,4,4,3);
+                ArrayList<Integer> fc2 = new ArrayList<>();
+                fc2.add(4);
+                ArrayList<Integer> dice2 = generateDice(3,3,3,2,2,2,2,2);
+                ArrayList<Integer> fc3 = new ArrayList<>();
+                fc3.add(1);
+                ArrayList<Integer> dice3 = generateDice(3,3,3,3,3,3,1,1);
+                ArrayList<Integer> fc4 = new ArrayList<>();
+                fc4.add(4);
+                ArrayList<Integer> dice4 = generateDice(2,2,2,2,1,1,1,1);
+                ArrayList<Integer> fc5 = new ArrayList<>();
+                fc5.add(1);
+                ArrayList<Integer> dice5 = generateDice(3,3,3,2,2,2,2,2);
+                ArrayList<Integer> fc6 = new ArrayList<>();
+                fc6.add(71);
+                ArrayList<Integer> dice6 = generateDice(3,3,2,2,2,2,2,2);
+                command.add(fc1);
+                command.add(dice1);
+                command.add(fc2);
+                command.add(dice2);
+                command.add(fc3);
+                command.add(dice3);
+                command.add(fc4);
+                command.add(dice4);
+                command.add(fc5);
+                command.add(dice5);
+                command.add(fc6);
+                command.add(dice6);
+                s.gameStart(true, command);
+                s.close();
+            }
+        });
+        Thread at = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Player a = new Player(1);
+                a.connect();
+                ArrayList<ArrayList<Integer>> command = new ArrayList<>();
+                ArrayList<Integer> choice = new ArrayList<>();
+                choice.add(2);
+                command.add(choice);
+                command.add(choice);
+                command.add(choice);
+
+                a.play(true, command);
+                a.close();
+            }
+        });Thread bt = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Player b = new Player(2);
+                b.connect();
+                ArrayList<ArrayList<Integer>> command = new ArrayList<>();
+                ArrayList<Integer> choice = new ArrayList<>();
+                choice.add(2);
+                command.add(choice);
+                command.add(choice);
+                command.add(choice);
+                b.play(true, command);
+                b.close();
+            }
+        });Thread ct = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Player c = new Player(3);
+                c.connect();
+                ArrayList<ArrayList<Integer>> command = new ArrayList<>();
+                ArrayList<Integer> choice = new ArrayList<>();
+                choice.add(2);
+                command.add(choice);
+                command.add(choice);
+                c.play(true, command);
+                c.close();
+            }
+        });
+        st.start();
+        at.start();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        bt.start();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        ct.start();
+        try {
+            Thread.sleep(8000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

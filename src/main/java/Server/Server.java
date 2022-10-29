@@ -367,7 +367,7 @@ public class Server {
                 System.out.println("Player entered island of the dead("+skulls+" skulls), other players reduce "+reduce+" points");
                 for(int i = 0; i<3; i++){
                     if(i != this.turn){
-                        this.score[i]-=reduce;
+                        this.score[i]+=reduce;
                     }
                     if(this.score[i] <0){
                         this.score[i] = 0;
@@ -607,7 +607,6 @@ public class Server {
 
     public int sendScore(){
         int turnScore = countScore(rolled, fc);
-        System.out.println("---------------");
         score[getTurn()-1]+=turnScore;
         boolean ending = false;
         for(int playerScore: score){
@@ -616,9 +615,11 @@ public class Server {
                 break;
             }
         }
+        if(!ending && countDown<3){
+            countDown = 3;
+        }
         if(ending){
             countDown--;
-            System.out.println(countDown);
         }
         byte[] scoreByte = new byte[3];
         for(int i = 0; i< 3; i++){
