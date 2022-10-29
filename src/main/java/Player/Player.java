@@ -149,6 +149,12 @@ public class Player {
                             System.out.println("You died.");
                             break;
                         }
+                        //determine if player can re-roll again
+                        byte[] can = receiveMessage(1);
+                        if(can[0] == 0){
+                            System.out.println("You didn't get any skull in island of the dead, cannot re-roll again.");
+                            break;
+                        }
                         System.out.println("Do you wish to re-roll again?");
                         System.out.println("1) Yes    2) No");
                         choice[0] = scanner.nextByte();
@@ -184,6 +190,11 @@ public class Player {
                         byte[] dead = receiveMessage(1);
                         if(dead[0] == 1){
                             System.out.println("Player " + msg[0] +" is dead");
+                            break;
+                        }
+                        byte[] can = receiveMessage(1);
+                        if(can[0] == 0){
+                            System.out.println("Player "+msg[0] +" didn't get any skull in island of the dead, cannot re-roll again.");
                             break;
                         }
                         choice = receiveMessage(1);

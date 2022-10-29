@@ -19,8 +19,10 @@ public class Server {
     private int fc;
     private ArrayList<Integer> rolled;
     private int[] score;
+    private boolean canReroll;
 
     public Server(int port, Boolean test){
+        canReroll = true;
         score = new int[3];
         rolled = new ArrayList<>();
         dice = new HashMap<>();
@@ -123,6 +125,17 @@ public class Server {
                 if(dead[0] == 1){
                     break;
                 }
+                //determine if player can re-roll
+                byte[] can = new byte[1];
+
+                if(canReroll){
+                    can[0] = 1;
+                    broadcast(can);
+                }else{
+                    broadcast(can);
+                    break;
+                }
+
                 //wait for user to decide if they want to re-roll again
                 choice = receive(1);
                 broadcast(choice);
@@ -351,6 +364,18 @@ public class Server {
     //re-roll with cheat, outcome can be specified
     public ArrayList<Integer> re_roll(ArrayList<Integer> dice, ArrayList<Integer> index, ArrayList<Integer> outcome){
         ArrayList<String> reroll = new ArrayList<>();
+        int skulls = 0;
+        for(int die: dice){
+            if(die == 3){
+                skulls++;
+            }
+        }
+        if(this.fc == 71){
+            skulls++;
+        }
+        if(this.fc == 72){
+            skulls+=2;
+        }
         for(int i: index){
             reroll.add(this.dice.get(dice.get(i)));
             if(dice.get(i) == 3 && this.fc == 2){
@@ -362,6 +387,7 @@ public class Server {
             dice.set(i, -1);
         }
         ArrayList<String> resultString = new ArrayList<>();
+        //player is in island of dead
         for(int i: outcome){
             resultString.add(this.dice.get(i));
         }
@@ -371,6 +397,19 @@ public class Server {
 
         }
         dice.addAll(outcome);
+
+        if(skulls >=4){
+            this.canReroll = false;
+            for(int die: outcome){
+                if (die == 3){
+                    canReroll = true;
+                    break;
+                }
+            }
+        }
+        if(!canReroll){
+            System.out.println("Player didn't roll any skull in island of the dead, cannot re-roll again.");
+        }
         return dice;
     }
 
@@ -384,6 +423,18 @@ public class Server {
     //player can re-roll a number of dice
     public ArrayList<Integer> re_roll(ArrayList<Integer> dice, ArrayList<Integer> index){
         ArrayList<String> reroll = new ArrayList<>();
+        int skulls = 0;
+        for(int die: dice){
+            if(die == 3){
+                skulls++;
+            }
+        }
+        if(this.fc == 71){
+            skulls++;
+        }
+        if(this.fc == 72){
+            skulls+=2;
+        }
         for(int i: index){
             reroll.add(this.dice.get(dice.get(i)));
             if(dice.get(i) == 3 && this.fc == 2){
@@ -408,6 +459,18 @@ public class Server {
 
         }
         dice.addAll(result);
+        if(skulls >=4){
+            this.canReroll = false;
+            for(int die: result){
+                if (die == 3){
+                    canReroll = true;
+                    break;
+                }
+            }
+        }
+        if(!canReroll){
+            System.out.println("Player didn't roll any skull in island of the dead, cannot re-roll again.");
+        }
         return dice;
     }
 
@@ -486,6 +549,10 @@ public class Server {
 
     public void close(){
         this.receive.close();
+    }
+
+    public void setFc(int fc){
+        this.fc = fc;
     }
 
 }

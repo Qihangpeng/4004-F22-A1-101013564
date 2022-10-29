@@ -719,5 +719,31 @@ public class AppTest
     }
 
 
+    @Test
+    //roll 3 skulls and 5 swords with FC with two skulls: re-roll 5 swords, get 5 coins, must stop  => -500 for other players
+    public void row111(){
+        Server s = new Server(4000, false);
+        ArrayList<Integer> dice = generateDice(3,3,3,4,4,4,4,4);
+        s.setFc(72);
+        Assertions.assertFalse( s.isDead(dice, 72));
+        ArrayList<Integer> index = new ArrayList<>();
+        ArrayList<Integer> outcome = new ArrayList<>();
+        index.add(3);
+        index.add(4);
+        index.add(5);
+        index.add(6);
+        index.add(7);
+        outcome.add(0);
+        outcome.add(0);
+        outcome.add(0);
+        outcome.add(0);
+        outcome.add(0);
+        dice = s.re_roll(dice, index, outcome);
+        Assertions.assertFalse( s.isDead(dice, 72));
+        assertEquals( 0,s.countScore(dice, 72));
+
+
+    }
+
 
 }
