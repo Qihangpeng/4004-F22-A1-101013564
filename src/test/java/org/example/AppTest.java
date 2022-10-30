@@ -8,6 +8,9 @@ import Server.Server;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -1237,7 +1240,11 @@ public class AppTest
     //player1 rolls 7 swords + 1 skull with FC captain (gets 4000 points - could win)
     //then player2 rolls 7 swords 1 skull  with FC 1 skull (2000)
     //then player3 scores 0 (3 skulls, 5 monkeys, FC coin) => game stops and declares player 1 wins
-    public void row132(){
+    public void row132() throws FileNotFoundException
+    {
+        PrintStream out = new PrintStream(new File("row132.txt"));
+        System.setOut(out);
+        PrintStream console = System.out;
         Thread st = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -1319,6 +1326,7 @@ public class AppTest
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        System.setOut(console);
     }
 
     @Test
@@ -1329,7 +1337,10 @@ public class AppTest
     //then player 1 rolls 4 monkeys, 4 parrots with FC coin, scores 1000 points to get him to 3800 (again can win)
     //then player2 scores 0 (3 skulls, 5 monkeys, FC Captain) and player3 scores 0 (2 skulls, 6 monkeys, FC 1 skull)
     //player 1 wins
-    public void row140(){
+    public void row140() throws FileNotFoundException {
+        PrintStream out = new PrintStream(new File("row140.txt"));
+        System.setOut(out);
+        PrintStream console = System.out;
         Thread st = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -1431,6 +1442,8 @@ public class AppTest
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        System.setOut(console);
+
     }
 
     @Test
@@ -1438,7 +1451,10 @@ public class AppTest
     //player2 rolls 7 swords + 1 skull with FC captain (gets 4000 points - could win)
     // then player3 scores 0 with FC 2 skulls and a roll of 1 skull & 7 swords
     //    then player 1 has FC Captain rolls 8 swords and thus gets 9000 points     => player 1 WINS
-    public void row145(){
+    public void row145() throws FileNotFoundException{
+        PrintStream out = new PrintStream(new File("row145.txt"));
+        System.setOut(out);
+        PrintStream console = System.out;
         Thread st = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -1531,6 +1547,7 @@ public class AppTest
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        System.setOut(console);
     }
 
 
