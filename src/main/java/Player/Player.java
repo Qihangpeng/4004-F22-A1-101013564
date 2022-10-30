@@ -121,8 +121,13 @@ public class Player {
                         command = nextCommand(command);
 
                     }else{
-                        choice[0] = scanner.nextByte();
+                        byte input = scanner.nextByte();
+                        choice[0] = input;
                         scanner.nextLine();//consume \n
+                        while(input != 1 && input != 2){
+                            input = scanner.nextByte();
+                            scanner.nextLine();//consume \n
+                        }
                     }
                     sendToServer(choice);
                     receiveMessage(1);
@@ -199,8 +204,13 @@ public class Player {
                         }
                         System.out.println("Do you wish to re-roll again?");
                         System.out.println("1) Yes    2) No");
-                        choice[0] = scanner.nextByte();
+                        byte inputChoice = scanner.nextByte();
+                        choice[0] = inputChoice;
                         scanner.nextLine();
+                        while(inputChoice != 1 && inputChoice != 2){
+                            inputChoice = scanner.nextByte();
+                            scanner.nextLine();
+                        }
                         sendToServer(choice);
                         receiveMessage(1);
                     }
