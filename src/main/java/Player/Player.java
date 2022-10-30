@@ -164,8 +164,10 @@ public class Player {
                         //receive new dice result
                         byte[] rerolled = receiveMessage(8);
                         dice.clear();
+                        diceArray.clear();
                         for(int i =0;i<8;i++){
                             dice.add(this.dice.get((int)rerolled[i]));
+                            diceArray.add((int)rerolled[i]);
                         }
                         System.out.println("Your dice now is: " + dice);
                         byte[] dead = receiveMessage(1);
