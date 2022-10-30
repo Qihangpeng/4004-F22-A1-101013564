@@ -221,7 +221,6 @@ public class Player {
                     //player is not dead
                     //check for island of dead
                     int skulls = 0;
-                    System.out.println(diceArray);
                     for (int die : diceArray) {
                         if (die == 3) {
                             skulls++;

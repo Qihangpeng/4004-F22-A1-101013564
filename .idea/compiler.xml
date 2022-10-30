@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="A1" />
         <module name="Pirates" />
+        <module name="4004-F22-A1-101013564" />
       </profile>
     </annotationProcessing>
   </component>
