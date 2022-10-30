@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 
 /**
  * Unit test for simple App.
@@ -779,6 +778,38 @@ public class AppTest
         ArrayList<Integer> dice = generateDice(3,3,3,2,2,2,1,1);
         Assertions.assertTrue( s.isDead(dice, 6));
         assertEquals( 0,s.countScore(dice, 6));
+        s.close();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    //roll 3 parrots, 2 swords, 2 diamonds, 1 coin     put 2 diamonds and 1 coin in chest
+    //  then re-roll 2 swords and get 2 parrots put 5 parrots in chest and take out 2 diamonds & coin
+    //  then re-roll the 3 dice and get 1 skull, 1 coin and a parrot
+    //   score 6 parrots + 1 coin for 1100 points
+    public void row90(){
+        Server s = new Server(4000, false);
+        ArrayList<Integer> dice = generateDice(1,1,1,4,4,5,5,0);
+        Assertions.assertFalse( s.isDead(dice, 0));
+        ArrayList<Integer> index = new ArrayList<>();
+        ArrayList<Integer> outcome = new ArrayList<>();
+        index.add(3);
+        index.add(4);
+        outcome.add(1);
+        outcome.add(1);
+        dice = s.re_roll(dice, index, outcome);
+        Assertions.assertFalse( s.isDead(dice, 0));
+        index.add(5);
+        outcome.remove(0);
+        outcome.add(0);
+        outcome.add(3);
+        dice = s.re_roll(dice, index, outcome);
+        Assertions.assertFalse( s.isDead(dice, 0));
+        assertEquals( 1100,s.countScore(dice, 0));
         s.close();
         try {
             Thread.sleep(1000);
