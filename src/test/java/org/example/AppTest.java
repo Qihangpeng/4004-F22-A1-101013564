@@ -818,6 +818,41 @@ public class AppTest
         }
     }
 
+    @Test
+    //roll 2 skulls, 3 parrots, 3 coins   put 3 coins in chest
+    //  then re-rolls 3 parrots and get 2 diamonds 1 coin    put coin in chest (now 4)
+    //   then re-roll 2 diamonds and get 1 skull 1 coin     score for chest only = 400 + 200 = 600 AND report death
+    public void row94(){
+        Server s = new Server(4000, false);
+        ArrayList<Integer> dice = generateDice(3,3,1,1,1,0,0,0);
+        Assertions.assertFalse( s.isDead(dice, 0));
+        ArrayList<Integer> index = new ArrayList<>();
+        ArrayList<Integer> outcome = new ArrayList<>();
+        index.add(2);
+        index.add(3);
+        index.add(4);
+        outcome.add(5);
+        outcome.add(5);
+        outcome.add(0);
+        dice = s.re_roll(dice, index, outcome);
+        Assertions.assertFalse( s.isDead(dice, 0));
+        index.clear();
+        outcome.clear();
+        index.add(5);
+        index.add(6);
+        outcome.add(3);
+        outcome.add(0);
+        dice = s.re_roll(dice, index, outcome);
+        Assertions.assertTrue( s.isDead(dice, 0));
+        assertEquals( 600,s.countScore(dice, 0));
+        s.close();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Test
     //3 monkeys, 3 swords, 1 diamond, 1 parrot FC: coin   => SC 400  (ie no bonus)
