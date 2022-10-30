@@ -213,7 +213,7 @@ public class Player {
                     dice.add(this.dice.get((int)msg[i]));
                     diceArray.add((int)msg[i]);
                 }
-                System.out.println("Player" +msg[0] +" rolled: " + dice);
+                System.out.println("Player " +msg[0] +" rolled: " + dice);
                 if(msg[2] == 1){
                     //player is dead
                     System.out.println("Player "+msg[0]+" is dead");
@@ -221,6 +221,7 @@ public class Player {
                     //player is not dead
                     //check for island of dead
                     int skulls = 0;
+                    System.out.println(diceArray);
                     for (int die : diceArray) {
                         if (die == 3) {
                             skulls++;
@@ -233,7 +234,7 @@ public class Player {
                         skulls += 2;
                     }
                     if (skulls >= 4) {
-                        System.out.println("Player" + msg[0]+" are in island of dead");
+                        System.out.println("Player " + msg[0]+" is in island of dead");
                     }
                     byte[] choice = receiveMessage(1);
                     while(choice[0] == 1){
