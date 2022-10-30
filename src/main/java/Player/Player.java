@@ -248,7 +248,15 @@ public class Player {
                 newScore[i] = score[i] *100;
             }
             if(msg[0] == this.id){
-
+                if(score[msg[0]-1] == newScore[msg[0]-1]){
+                    System.out.println("Your score is unchanged");
+                }else{
+                    if(score[msg[0]-1] > newScore[msg[0]-1]){
+                        System.out.println("You reduced points due to lost of sea battle");
+                    }
+                }
+            }else if(score[(msg[0]%3)] > newScore[msg[0]%3]){
+                System.out.println("You reduced points due to island of dead");
             }
             System.out.println("________________________________________");
             System.out.println("| Player |    1    |    2    |    3    |");
