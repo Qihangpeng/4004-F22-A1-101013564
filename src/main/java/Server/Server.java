@@ -448,6 +448,7 @@ public class Server {
     //re-roll with cheat, outcome can be specified
     public ArrayList<Integer> re_roll(ArrayList<Integer> dice, ArrayList<Integer> index, ArrayList<Integer> outcome){
         ArrayList<String> reroll = new ArrayList<>();
+        canReroll = true;
         int skulls = 0;
         for(int die: dice){
             if(die == 3){
