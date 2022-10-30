@@ -105,8 +105,12 @@ public class Server {
             }
             broadcast(msg);
             if(msg[2] == 1){
-                System.out.println("Player "+ this.turn+ " is dead, starting next turn");
-                if(sendScore() == 0){
+                System.out.println("Player "+ this.turn+ " is dead");
+                int remaining = sendScore();
+                byte[] remainingByte = new byte[1];
+                remainingByte[0] = (byte)remaining;
+                broadcast(remainingByte);
+                if(remaining == 0){
                     break;
                 }
                 continue;
@@ -160,10 +164,11 @@ public class Server {
                 choice = receive(1);
                 broadcast(choice);
             }
-
-
-
-            if(sendScore() == 0){
+            int remaining = sendScore();
+            if(remaining == 0){
+                byte[] remainingByte = new byte[1];
+                remainingByte[0] = (byte)remaining;
+                broadcast(remainingByte);
                 break;
             }
         }
@@ -626,6 +631,7 @@ public class Server {
             scoreByte[i] = (byte)(this.score[i]/100);
         }
         broadcast(scoreByte);
+
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {

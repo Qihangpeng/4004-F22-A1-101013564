@@ -263,6 +263,12 @@ public class Player {
             System.out.println("----------------------------------------");
             System.out.printf( "| Score  |   %4d  |  %4d   |  %4d   |\n", newScore[0], newScore[1], newScore[2]);
             System.out.println("----------------------------------------");
+
+            byte[] remaining = receiveMessage(1);
+            if(remaining[0] < 3){
+                System.out.println("game end's in " + remaining[0]+ " turn(s)");
+            }
+
         }
     }
 
