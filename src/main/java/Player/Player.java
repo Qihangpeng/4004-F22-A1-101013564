@@ -266,7 +266,12 @@ public class Player {
 
             byte[] remaining = receiveMessage(1);
             if(remaining[0] < 3){
-                System.out.println("game end's in " + remaining[0]+ " turn(s)");
+                if(remaining[0] == 0){
+                    byte[] winner = receiveMessage(1);
+                    System.out.println("Player " + winner[0] + " won the game");
+                }else{
+                    System.out.println("game end's in " + remaining[0]+ " turn(s)");
+                }
             }
 
         }

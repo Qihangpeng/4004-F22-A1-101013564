@@ -65,73 +65,83 @@ public class Server {
     public void gameStart(boolean cheat, ArrayList<ArrayList<Integer>> command){
         System.out.println(command);
 
-        while(true){
+        while(true) {
             nextTurn();
             rolled.clear();
             //send player turn, first dice roll, and fortune card to everyone
             byte[] msg = new byte[11];
             msg[0] = getTurn();
-            //if cheat, draw card, else, use the card specified
-            if(cheat){
+            //if not cheat, draw card, else, use the card specified
+            if (cheat) {
                 this.fc = command.get(0).get(0);
                 command = nextCommand(command);
-            }else{
+            } else {
                 this.fc = drawCard();
             }
             msg[1] = (byte) fc;
 
             //determine dice depending on cheat
-            if(cheat){
+            if (cheat) {
                 rolled = command.get(0);
                 command = nextCommand(command);
-            }else{
-                for(int i = 0; i< 8; i++){
+            } else {
+                for (int i = 0; i < 8; i++) {
                     rolled.add(rollDice());
                 }
             }
             //display player roll
             System.out.print("Player rolled: ");
-            for(int i =0; i<8;i++){
+            for (int i = 0; i < 8; i++) {
                 System.out.printf("%10s", this.dice.get(rolled.get(i)));
             }
             System.out.println();
-            if(isDead(rolled, fc)){
+            if (isDead(rolled, fc)) {
                 msg[2] = 1;
-            }else{
+            } else {
                 msg[2] = 0;
             }
-            for(int i = 3; i<11;i++){
-                msg[i] = (byte)(int)rolled.get(i-3);
+            for (int i = 3; i < 11; i++) {
+                msg[i] = (byte) (int) rolled.get(i - 3);
             }
             broadcast(msg);
-            if(msg[2] == 1){
-                System.out.println("Player "+ this.turn+ " is dead");
+            if (msg[2] == 1) {
+                System.out.println("Player " + this.turn + " is dead");
                 int remaining = sendScore();
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 byte[] remainingByte = new byte[1];
-                remainingByte[0] = (byte)remaining;
+                remainingByte[0] = (byte) remaining;
                 broadcast(remainingByte);
-                if(remaining == 0){
+                if (remaining == 0) {
                     break;
+                }
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
                 continue;
             }
             //wait for player respond(re-roll)
             byte[] choice = receive(1);
             broadcast(choice);
-            while(choice[0]!=2){
+            while (choice[0] != 2) {
                 //receive 9 bytes that indicate which dice to re-roll
-                System.out.println("Player "+ this.turn+" re-rolling");
+                System.out.println("Player " + this.turn + " re-rolling");
                 byte[] message = receive(8);
 
                 ArrayList<Integer> index = new ArrayList<>();
-                for(int i = 0; i< 8; i++){
-                    if(message[i] >=0) {
+                for (int i = 0; i < 8; i++) {
+                    if (message[i] >= 0) {
                         index.add((int) message[i]);
                     }
                 }
                 rolled = re_roll(rolled, index);
-                for(int i = 0; i< 8;i++){
-                    msg[i] = (byte)(int)rolled.get(i);
+                for (int i = 0; i < 8; i++) {
+                    msg[i] = (byte) (int) rolled.get(i);
                 }
                 //send new result to everyone
                 broadcast(msg);
@@ -142,20 +152,20 @@ public class Server {
                 }
                 //check if player is dead with new result
                 byte[] dead = new byte[1];
-                if(isDead(rolled, fc)){
+                if (isDead(rolled, fc)) {
                     dead[0] = 1;
                 }
                 broadcast(dead);
-                if(dead[0] == 1){
+                if (dead[0] == 1) {
                     break;
                 }
                 //determine if player can re-roll
                 byte[] can = new byte[1];
 
-                if(canReroll){
+                if (canReroll) {
                     can[0] = 1;
                     broadcast(can);
-                }else{
+                } else {
                     broadcast(can);
                     break;
                 }
@@ -164,12 +174,23 @@ public class Server {
                 choice = receive(1);
                 broadcast(choice);
             }
+            //send score to players, determine if the game should end and tell player
             int remaining = sendScore();
-            if(remaining == 0){
-                byte[] remainingByte = new byte[1];
-                remainingByte[0] = (byte)remaining;
-                broadcast(remainingByte);
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            byte[] remainingByte = new byte[1];
+            remainingByte[0] = (byte) remaining;
+            broadcast(remainingByte);
+            if (remaining == 0) {
                 break;
+            }
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
         int winner = 1;
@@ -179,6 +200,9 @@ public class Server {
             }
         }
         System.out.println("Player "+ winner+ " won the game");
+        byte[] winnerByte = new byte[1];
+        winnerByte[0] = (byte)winner;
+        broadcast(winnerByte);
     }
 
     public void connect(){
@@ -631,12 +655,6 @@ public class Server {
             scoreByte[i] = (byte)(this.score[i]/100);
         }
         broadcast(scoreByte);
-
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         if(countDown == 0){
             System.out.println("game ended");
         }
