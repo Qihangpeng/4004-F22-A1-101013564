@@ -363,7 +363,7 @@ public class Player {
                 System.out.println("You can only re-roll one skull");
                 valid = false;
             }
-            if(!token){
+            if(!token && skulls >0){
                 System.out.println("You have already re-rolled a skull");
                 valid = false;
             }

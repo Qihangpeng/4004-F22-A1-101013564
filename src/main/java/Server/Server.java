@@ -132,6 +132,7 @@ public class Server {
             byte[] choice = receive(1);
             broadcast(choice);
             while (choice[0] != 2) {
+                canReroll = true;
                 //receive 9 bytes that indicate which dice to re-roll
                 System.out.println("Player " + this.turn + " re-rolling");
                 byte[] message = receive(8);
