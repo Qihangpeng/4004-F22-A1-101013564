@@ -834,6 +834,7 @@ public class AppTest
         outcome.add(5);
         outcome.add(5);
         outcome.add(0);
+        s.setReroll(index);
         dice = s.re_roll(dice, index, outcome);
         Assertions.assertFalse( s.isDead(dice, 0));
         index.clear();
@@ -842,6 +843,8 @@ public class AppTest
         index.add(6);
         outcome.add(3);
         outcome.add(0);
+        s.setReroll(index);
+
         dice = s.re_roll(dice, index, outcome);
         Assertions.assertTrue( s.isDead(dice, 0));
         assertEquals( 600,s.countScore(dice, 0));

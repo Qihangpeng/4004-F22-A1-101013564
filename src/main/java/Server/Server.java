@@ -21,8 +21,10 @@ public class Server {
     private int[] score;
     private boolean canReroll;
     private int countDown;
+    private ArrayList<Integer> reroll;
 
     public Server(int port, Boolean test){
+        reroll = new ArrayList<>();
         countDown = 3;
         canReroll = true;
         score = new int[3];
@@ -66,6 +68,7 @@ public class Server {
         System.out.println(command);
 
         while(true) {
+            reroll.clear();
             nextTurn();
             rolled.clear();
             //send player turn, first dice roll, and fortune card to everyone
@@ -139,6 +142,7 @@ public class Server {
                         index.add((int) message[i]);
                     }
                 }
+                reroll = index;
                 rolled = re_roll(rolled, index);
                 for (int i = 0; i < 8; i++) {
                     msg[i] = (byte) (int) rolled.get(i);
@@ -323,6 +327,12 @@ public class Server {
                 case 34:
                     score = -1000;
                     break;
+                case 0:
+                    for(int i = 0; i <reroll.size(); i++){
+                        dice.remove(dice.size()-1);
+                    }
+                    int[] list = countDice(dice);
+                    score = calculateScore(list, 0);
             }
 
         } else {
@@ -335,7 +345,7 @@ public class Server {
                 case 0://treasure chest
                 case 8://used sorceress
                 case 2://Sorceress
-                    score = calculateScore(list, 0);
+                    score = calculateScore(list, 2);
                     break;
                 case 1://captain
                     score = 2 * calculateScore(list, 1);
@@ -659,6 +669,10 @@ public class Server {
             System.out.println("game ended");
         }
         return countDown;
+    }
+
+    public void setReroll(ArrayList<Integer> reroll){
+        this.reroll = reroll;
     }
 
 }
