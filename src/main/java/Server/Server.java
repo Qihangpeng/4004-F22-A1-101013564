@@ -405,7 +405,7 @@ public class Server {
                 }
                 System.out.println("Player entered island of the dead("+skulls+" skulls), other players reduce "+reduce+" points");
                 for(int i = 0; i<3; i++){
-                    if(i != this.turn){
+                    if(i != this.turn-1){
                         this.score[i]+=reduce;
                     }
                     if(this.score[i] <0){
@@ -648,6 +648,11 @@ public class Server {
         int turnScore = countScore(rolled, fc);
         score[getTurn()-1]+=turnScore;
         boolean ending = false;
+        for(int i =0;i<3;i++){
+            if(score[i] < 0){
+                score[i] = 0;
+            }
+        }
         for(int playerScore: score){
             if (playerScore >= 3000) {
                 ending = true;

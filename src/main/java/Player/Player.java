@@ -16,7 +16,7 @@ public class Player {
     private int fc;
     private final int id;
     private final int port;
-    private ArrayList<Integer> scoreCard;
+    private int[] scoreCard;
     private boolean token;
     public Player(int id){
         token = false;
@@ -33,7 +33,7 @@ public class Player {
         fortuneCard.put(6, "Monkey Business");
         fortuneCard.put(71, "One Skull");
         fortuneCard.put(72, "Two Skulls");
-        scoreCard = new ArrayList<>();
+        scoreCard = new int[3];
         dice = new HashMap<>();
         dice.put(0, "Coin");
         dice.put(1, "parrot");
@@ -94,6 +94,22 @@ public class Player {
                 if(msg[2] == 1) {
                     System.out.println("You are dead");
                 }else {
+                    //check for island of dead
+                    int skulls = 0;
+                    for(int die: diceArray){
+                        if(die == 3){
+                            skulls++;
+                        }
+                    }
+                    if(fc == 71){
+                        skulls++;
+                    }
+                    if(fc == 72){
+                        skulls+=2;
+                    }
+                    if(skulls >=4){
+                        System.out.println("Player entered island of dead");
+                    }
                     //player is not dead, ask if player want to re-roll
                     System.out.println("Do you wish to Re-roll our dice?");
                     System.out.println("1) Yes    2) No");
@@ -157,7 +173,7 @@ public class Player {
                             System.out.println("You died.");
                             break;
                         }else{
-                            int skulls = 0;
+                            skulls = 0;
                             for(int die: rerolled){
                                 if(die == 3){
                                     skulls++;
@@ -170,7 +186,7 @@ public class Player {
                                 skulls+=2;
                             }
                             if(skulls >=4){
-                                System.out.println("You are in island of dead");
+                                System.out.println("You entered island of dead");
                             }
                         }
                         //determine if player can re-roll again
@@ -192,8 +208,10 @@ public class Player {
                 System.out.println("it is player "+ msg[0]+" turn to play");
                 System.out.println("Fortune card: " + fortuneCard.get((int)msg[1]));
                 ArrayList<String> dice = new ArrayList<>();
+                ArrayList<Integer> diceArray = new ArrayList<>();
                 for(int i = 3; i<11; i++){
                     dice.add(this.dice.get((int)msg[i]));
+                    diceArray.add((int)msg[i]);
                 }
                 System.out.println("Player" +msg[0] +" rolled: " + dice);
                 if(msg[2] == 1){
@@ -201,6 +219,22 @@ public class Player {
                     System.out.println("Player "+msg[0]+" is dead");
                 }else{
                     //player is not dead
+                    //check for island of dead
+                    int skulls = 0;
+                    for (int die : diceArray) {
+                        if (die == 3) {
+                            skulls++;
+                        }
+                    }
+                    if (fc == 71) {
+                        skulls++;
+                    }
+                    if (fc == 72) {
+                        skulls += 2;
+                    }
+                    if (skulls >= 4) {
+                        System.out.println("Player" + msg[0]+" are in island of dead");
+                    }
                     byte[] choice = receiveMessage(1);
                     while(choice[0] == 1){
                         //player choose not to re-roll
@@ -216,7 +250,7 @@ public class Player {
                             System.out.println("Player " + msg[0] +" is dead");
                             break;
                         }else {
-                            int skulls = 0;
+                            skulls = 0;
                             for (int die : rerolled) {
                                 if (die == 3) {
                                     skulls++;
@@ -229,7 +263,7 @@ public class Player {
                                 skulls += 2;
                             }
                             if (skulls >= 4) {
-                                System.out.println("You are in island of dead");
+                                System.out.println("Player" + msg[0]+" are in island of dead");
                             }
                         }
                         byte[] can = receiveMessage(1);
@@ -258,12 +292,13 @@ public class Player {
             }else if(score[(msg[0]%3)] > newScore[msg[0]%3]){
                 System.out.println("You reduced points due to island of dead");
             }
+            System.out.println("Player " + msg[0] + " scored " + (newScore[msg[0]-1] - scoreCard[msg[0] -1]));
             System.out.println("________________________________________");
             System.out.println("| Player |    1    |    2    |    3    |");
             System.out.println("----------------------------------------");
             System.out.printf( "| Score  |   %4d  |  %4d   |  %4d   |\n", newScore[0], newScore[1], newScore[2]);
             System.out.println("----------------------------------------");
-
+            scoreCard = newScore;
             byte[] remaining = receiveMessage(1);
             if(remaining[0] < 3){
                 if(remaining[0] == 0){
