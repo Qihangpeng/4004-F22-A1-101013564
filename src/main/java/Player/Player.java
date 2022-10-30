@@ -269,6 +269,7 @@ public class Player {
                 if(remaining[0] == 0){
                     byte[] winner = receiveMessage(1);
                     System.out.println("Player " + winner[0] + " won the game");
+                    break;
                 }else{
                     System.out.println("game end's in " + remaining[0]+ " turn(s)");
                 }

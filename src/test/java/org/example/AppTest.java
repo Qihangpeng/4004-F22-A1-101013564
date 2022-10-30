@@ -1246,7 +1246,7 @@ public class AppTest
         }
         ct.start();
         try {
-            Thread.sleep(4000);
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -1312,7 +1312,6 @@ public class AppTest
                 command.add(choice);
                 command.add(choice);
                 command.add(choice);
-
                 a.play(true, command);
                 a.close();
             }
