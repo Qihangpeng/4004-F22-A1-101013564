@@ -145,6 +145,7 @@ public class Player {
                         }
                         System.out.println();
                         sendToServer(reroll);
+                        //receive new dice result
                         byte[] rerolled = receiveMessage(8);
                         dice.clear();
                         for(int i =0;i<8;i++){
@@ -155,6 +156,22 @@ public class Player {
                         if(dead[0] == 1){
                             System.out.println("You died.");
                             break;
+                        }else{
+                            int skulls = 0;
+                            for(int die: rerolled){
+                                if(die == 3){
+                                    skulls++;
+                                }
+                            }
+                            if(fc == 71){
+                                skulls++;
+                            }
+                            if(fc == 72){
+                                skulls+=2;
+                            }
+                            if(skulls >=4){
+                                System.out.println("You are in island of dead");
+                            }
                         }
                         //determine if player can re-roll again
                         byte[] can = receiveMessage(1);
@@ -198,6 +215,22 @@ public class Player {
                         if(dead[0] == 1){
                             System.out.println("Player " + msg[0] +" is dead");
                             break;
+                        }else {
+                            int skulls = 0;
+                            for (int die : rerolled) {
+                                if (die == 3) {
+                                    skulls++;
+                                }
+                            }
+                            if (fc == 71) {
+                                skulls++;
+                            }
+                            if (fc == 72) {
+                                skulls += 2;
+                            }
+                            if (skulls >= 4) {
+                                System.out.println("You are in island of dead");
+                            }
                         }
                         byte[] can = receiveMessage(1);
                         if(can[0] == 0){
@@ -213,6 +246,9 @@ public class Player {
             int[] newScore = new int[3];
             for(int i =0; i< 3; i++){
                 newScore[i] = score[i] *100;
+            }
+            if(msg[0] == this.id){
+
             }
             System.out.println("________________________________________");
             System.out.println("| Player |    1    |    2    |    3    |");
