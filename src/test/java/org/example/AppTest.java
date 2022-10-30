@@ -99,6 +99,7 @@ public class AppTest
         ArrayList<Integer> index = generateDice(0,1,2,3,4,5,6,7);
         dice = s.re_roll(dice, index);
         System.out.println(dice);
+        s.close();
     }
 
     @Test
@@ -106,6 +107,7 @@ public class AppTest
         Server s = new Server(4000, false);
         ArrayList<Integer> dice = generateDice(s.rollDice(),s.rollDice(),s.rollDice(),s.rollDice(),s.rollDice(),s.rollDice(),s.rollDice(),s.rollDice());
         System.out.println(Arrays.toString(s.countDice(dice)));
+        s.close();
     }
 
     @Test
@@ -113,6 +115,7 @@ public class AppTest
         Server s = new Server(4000, false);
         ArrayList<Integer> dice = generateDice(s.rollDice(),s.rollDice(),s.rollDice(),s.rollDice(),s.rollDice(),s.rollDice(),s.rollDice(),s.rollDice());
         System.out.println(s.countScore(dice, 0));
+        s.close();
     }
 
     @Test
@@ -120,6 +123,11 @@ public class AppTest
         Player a = new Player(1);
         System.out.println(a.score());
         a.close();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -138,7 +146,11 @@ public class AppTest
         Server s = new Server(4000, false);
         assertEquals(0,s.countScore(dice, 4));
         s.close();
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -158,7 +170,11 @@ public class AppTest
         ArrayList<Integer> result = s.re_roll(dice, index, outcome);
         Assertions.assertTrue(s.isDead(result, 4));
         s.close();
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -175,7 +191,11 @@ public class AppTest
         ArrayList<Integer> result = s.re_roll(dice, index, outcome);
         Assertions.assertTrue(s.isDead(result, 0));
         s.close();
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -200,7 +220,11 @@ public class AppTest
         result = s.re_roll(result, index, outcome);
         Assertions.assertTrue(s.isDead(result, 4));
         s.close();
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -230,7 +254,11 @@ public class AppTest
         Assertions.assertFalse(s.isDead(result, 4));
         assertEquals( 4800,s.countScore(result, 4));
         s.close();
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -241,7 +269,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(dice, 1));
         assertEquals( 800,s.countScore(dice, 1));
         s.close();
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -261,7 +293,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(result, 4));
         assertEquals( 300,s.countScore(result, 4));
         s.close();
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -272,7 +308,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(dice, 4));
         assertEquals( 300,s.countScore(dice, 4));
         s.close();
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -283,7 +323,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(dice, 4));
         assertEquals( 500,s.countScore(dice, 4));
         s.close();
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -294,7 +338,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(dice, 5));
         assertEquals( 700,s.countScore(dice, 5));
         s.close();
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -305,7 +353,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(dice, 4));
         assertEquals( 400,s.countScore(dice, 4));
         s.close();
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -324,7 +376,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(result, 4));
         assertEquals( 800,s.countScore(result, 4));
         s.close();
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -343,7 +399,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(result, 1));
         assertEquals( 1200,s.countScore(result, 1));
         s.close();
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -366,7 +426,11 @@ public class AppTest
         dice = s.re_roll(dice, index, outcome);
         assertEquals( 600,s.countScore(dice, 4));
         s.close();
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -377,7 +441,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(dice, 5));
         assertEquals( 1100,s.countScore(dice, 5));
         s.close();
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -389,7 +457,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(dice, 5));
         assertEquals( 2100,s.countScore(dice, 5));
         s.close();
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -400,7 +472,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(dice, 5));
         assertEquals( 5400,s.countScore(dice, 5));
         s.close();
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -411,7 +487,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(dice, 5));
         assertEquals( 5400,s.countScore(dice, 5));
         s.close();
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -422,7 +502,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(dice, 1));
         assertEquals( 9000,s.countScore(dice, 1));
         s.close();
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -441,7 +525,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(dice, 4));
         assertEquals( 4600,s.countScore(dice, 4));
         s.close();
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -460,7 +548,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(dice, 5));
         assertEquals( 400,s.countScore(dice, 5));
         s.close();
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -479,7 +571,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(dice, 4));
         assertEquals( 500,s.countScore(dice, 4));
         s.close();
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -500,7 +596,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(dice, 4));
         assertEquals( 600,s.countScore(dice, 4));
         s.close();
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -522,7 +622,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(dice, 5));
         assertEquals( 500,s.countScore(dice, 5));
         s.close();
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -533,6 +637,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(dice, 4));
         assertEquals( 600,s.countScore(dice, 4));
         s.close();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -559,6 +668,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(dice, 1));
         assertEquals( 500,s.countScore(dice, 2));
         s.close();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -581,6 +695,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(dice, 2));
         assertEquals( 1000,s.countScore(dice, 2));
         s.close();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -607,6 +726,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(dice, 2));
         assertEquals( 2000,s.countScore(dice, 2));
         s.close();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -618,6 +742,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(dice, 6));
         assertEquals( 1100,s.countScore(dice, 6));
         s.close();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -636,6 +765,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(dice, 6));
         assertEquals( 1700,s.countScore(dice, 6));
         s.close();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -646,7 +780,11 @@ public class AppTest
         Assertions.assertTrue( s.isDead(dice, 6));
         assertEquals( 0,s.countScore(dice, 6));
         s.close();
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -658,7 +796,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(dice, 4));
         assertEquals( 400,s.countScore(dice, 4));
         s.close();
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -669,7 +811,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(dice, 1));
         assertEquals( 1800,s.countScore(dice, 1));
         s.close();
-
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -680,6 +826,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(dice, 4));
         assertEquals( 1000,s.countScore(dice, 4));
         s.close();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -700,7 +851,6 @@ public class AppTest
         dice = s.re_roll(dice, index, outcome);
         Assertions.assertFalse( s.isDead(dice, 32));
         assertEquals( 1200,s.countScore(dice, 32));
-
         s.close();
 
     }
@@ -823,6 +973,11 @@ public class AppTest
         Assertions.assertTrue( s.isDead(dice, 32));
         assertEquals( -300,s.countScore(dice, 32));
         s.close();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -843,9 +998,14 @@ public class AppTest
         outcome.add(3);
         outcome.add(3);
         dice = s.re_roll(dice, index, outcome);
-        Assertions.assertFalse( s.isDead(dice, 33));
+        Assertions.assertTrue( s.isDead(dice, 33));
         assertEquals( -500,s.countScore(dice, 33));
         s.close();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -857,6 +1017,11 @@ public class AppTest
         Assertions.assertTrue( s.isDead(dice, 34));
         assertEquals( -1000,s.countScore(dice, 34));
         s.close();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -868,6 +1033,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(dice, 32));
         assertEquals( 500,s.countScore(dice, 32));
         s.close();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -888,6 +1058,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(dice, 32));
         assertEquals( 500,s.countScore(dice, 32));
         s.close();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -899,6 +1074,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(dice, 33));
         assertEquals( 800,s.countScore(dice, 33));
         s.close();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -920,9 +1100,14 @@ public class AppTest
         outcome.add(4);
         outcome.add(4);
         dice = s.re_roll(dice, index, outcome);
-        Assertions.assertFalse( s.isDead(dice, 33));
+        Assertions.assertTrue( s.isDead(dice, 33));
         assertEquals( -500,s.countScore(dice, 33));
         s.close();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -935,6 +1120,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(dice, 34));
         assertEquals( 1300,s.countScore(dice, 34));
         s.close();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
@@ -967,6 +1157,11 @@ public class AppTest
         Assertions.assertFalse( s.isDead(dice, 34));
         assertEquals( 1300,s.countScore(dice, 34));
         s.close();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test

@@ -318,7 +318,7 @@ public class Server {
                     break;
                 case 34://sea battle with 4 swords, 1000 points
                     score = calculateScore(list, 34);
-                    if (list[4] == 4) {
+                    if (list[4] >= 4) {
                         score += 1000;
                     } else {
                         score = -1000;
@@ -326,7 +326,7 @@ public class Server {
                     break;
                 case 32://sea battle with 2 swords, 300 points
                     score = calculateScore(list, 32);
-                    if (list[4] == 2) {
+                    if (list[4] >= 2) {
                         score += 300;
                     } else {
                         score = -300;
@@ -334,7 +334,7 @@ public class Server {
                     break;
                 case 33://sea battle with 3 swords, 500 points
                     score = calculateScore(list, 33);
-                    if (list[4] == 3) {
+                    if (list[4] >= 3) {
                         score += 500;
                     } else {
                         score = -500;
@@ -402,7 +402,7 @@ public class Server {
             }else if(fc == 72){
                 skulls +=2;
             }
-            if(skulls ==3){
+            if(skulls ==3 || (skulls>=3 && (fc == 32 || fc == 33 || fc == 34))){
                 System.out.println("Player " + getTurn() + " is dead(" + skulls+" skulls)");
                 return true;
             }else{
