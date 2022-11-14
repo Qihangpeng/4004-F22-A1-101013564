@@ -47,7 +47,7 @@ public class stepDef extends TestCase {
         }else{
             assertFalse(s.isDead(dice, fc));
         }
-
+        s.close();
     }
 
     @When("re-roll dice {string}")
