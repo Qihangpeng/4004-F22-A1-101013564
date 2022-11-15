@@ -119,7 +119,7 @@ public class stepDef extends TestCase {
     public void game_ends_with_winner(int int1) {
         // Write code here that turns the phrase above into concrete actions
         try {
-            Thread.sleep(5000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
