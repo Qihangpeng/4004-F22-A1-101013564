@@ -86,3 +86,13 @@
         |3  |3  |1  |1  |1  |2  |2  |2  |72  |"2,3,4" |"3,3,4"|"2,3,4,7"|"3,3,3,4"|0   |0     |
         |2  |2  |2  |3  |4  |5  |1  |1  |34  |"6,7"   |"4,4"  |"0,1,2"  |"4,1,1"  |1300|0     |
 
+    @multi-player
+    Feature: networked tests
+      Scenario Outline: 3 players play a cheated game
+        Given server is running with cheat command <commandS>
+        When player 1 starts with cheat command <command1>
+        And player 2 starts with cheat command <command2>
+        And player 3 starts with cheat command <command3>
+        Then game ends with winner <winner>
+        Examples:
+        
