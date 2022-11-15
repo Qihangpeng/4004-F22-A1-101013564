@@ -1,7 +1,7 @@
 @Tag
   @singleRoll
   Feature: acceptance tests
-    Scenario Outline: player roll eight dice, score
+    Scenario Outline: player roll eight dice, score. 45,52,54,55,56,57,62,63,64,65,66,72,82,97,98,99,103,106,107,114,116,117,120,123
       Given player roll eight dice <0> <1> <2> <3> <4> <5> <6> <7>
       And fortune card is <fc>
       When player end turn
@@ -36,7 +36,7 @@
         |2  |2  |2  |4  |4  |4  |4  |3  |34  |1300   |0     |
 
     @re-rollOnce
-    Scenario Outline: player roll eight dice, re-roll once, score
+    Scenario Outline: player roll eight dice, re-roll once, score. 46,47,53,58,59,67,68,69,70,71,83,102,110,111,115,119,
       Given player roll eight dice <0> <1> <2> <3> <4> <5> <6> <7>
       And fortune card is <fc>
       When re-roll dice <index> and got new dice <dice>
@@ -65,7 +65,7 @@
 
 
     @re-rollTwice
-    Scenario Outline: player roll eight dice, re-roll twice, score
+    Scenario Outline: player roll eight dice, re-roll twice, score. 49,51,61,77,78,79,90,94,109,126
       Given player roll eight dice <0> <1> <2> <3> <4> <5> <6> <7>
       And fortune card is <fc>
       When re-roll dice <index1> and got new dice <dice1>
@@ -87,7 +87,7 @@
         |2  |2  |2  |3  |4  |5  |1  |1  |34  |"6,7"   |"4,4"  |"0,1,2"  |"4,1,1"  |1300|0     |
 
     @multi-player
-    Scenario Outline: 3 players play a cheated game
+    Scenario Outline: 3 players play a cheated game. 132,140,145,150
       Given server is running with cheat command <commandS>
       When player 1 starts with cheat command <command1>
       And player 2 starts with cheat command <command2>
