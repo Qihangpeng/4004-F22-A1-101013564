@@ -34,11 +34,12 @@ public class stepDef extends TestCase {
     }
     @When("player end turn")
     public void player_end_turn() {
-        s.countScore(dice,fc);
+        score = s.countScore(dice,fc);
     }
     @Then("player score {int}")
     public void player_score(int int1) {
         assertEquals(int1, score);
+        s.close();
     }
     @Then("player is {int}")
     public void player_is_dead(int dead) {
@@ -47,7 +48,6 @@ public class stepDef extends TestCase {
         }else{
             assertFalse(s.isDead(dice, fc));
         }
-        s.close();
     }
 
     @When("re-roll dice {string}")
