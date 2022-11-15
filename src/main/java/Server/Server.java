@@ -80,6 +80,9 @@ public class Server {
             msg[0] = getTurn();
             //if not cheat, draw card, else, use the card specified
             if (cheat) {
+                if(command.isEmpty()){
+                    return;
+                }
                 this.fc = command.get(0).get(0);
                 command = nextCommand(command);
             } else {
@@ -89,6 +92,9 @@ public class Server {
 
             //determine dice depending on cheat
             if (cheat) {
+                if(command.isEmpty()){
+                    return;
+                }
                 rolled = command.get(0);
                 command = nextCommand(command);
             } else {
@@ -148,7 +154,13 @@ public class Server {
                     }
                 }
                 reroll = index;
-                rolled = re_roll(rolled, index);
+                if(cheat){
+                    reroll = re_roll(rolled, index, command.get(0));
+                    command.remove(0);
+                }else{
+                    rolled = re_roll(rolled, index);
+
+                }
                 for (int i = 0; i < 8; i++) {
                     msg[i] = (byte) (int) rolled.get(i);
                 }
@@ -497,6 +509,9 @@ public class Server {
                     canReroll = true;
                     break;
                 }
+            }
+            if(outcome.size()==1){
+                canReroll = true;
             }
         }
         if(!canReroll){

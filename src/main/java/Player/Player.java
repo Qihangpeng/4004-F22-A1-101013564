@@ -117,6 +117,7 @@ public class Player {
                     byte[] choice = new byte[1];
                     Scanner scanner = new Scanner(System.in);
                     if(cheat){
+                        System.out.println("using command: " + command.get(0));
                         choice[0] = (byte)(int)command.get(0).get(0);
                         command = nextCommand(command);
 
@@ -144,23 +145,36 @@ public class Player {
                         }
                         System.out.println();
                         //format indices of dice to re-roll and send to server
-                        String input = scanner.nextLine();
-                        String[] index = input.split(" ");
                         byte[] reroll = new byte[8];
-                        if(input.equals("")){
-                            for(int i = 0; i< 8; i++){
+
+                        if(cheat){
+                            command.get(0);
+                            for(int i = 0; i < command.get(0).size(); i++){
+                                reroll[i] = command.get(0).get(i).byteValue();
+                            }
+                            for(int i = command.get(0).size(); i < 8; i++){
                                 reroll[i] = -1;
                             }
+                            command.remove(0);
                         }else{
-                            for(int i = 0; i< index.length; i++){
-                                if(!index[i].equals("")){
-                                    reroll[i] = (byte) Integer.parseInt(index[i]);
+                            String input = scanner.nextLine();
+                            String[] index = input.split(" ");
+                            if(input.equals("")){
+                                for(int i = 0; i< 8; i++){
+                                    reroll[i] = -1;
+                                }
+                            }else{
+                                for(int i = 0; i< index.length; i++){
+                                    if(!index[i].equals("")){
+                                        reroll[i] = (byte) Integer.parseInt(index[i]);
+                                    }
+                                }
+                                for(int i = index.length; i < 8; i++){
+                                    reroll[i] = -1;
                                 }
                             }
-                            for(int i = index.length; i < 8; i++){
-                                reroll[i] = -1;
-                            }
                         }
+
                         if(!validateReroll(diceArray, reroll, fc)){
                             continue;
                         }
@@ -204,12 +218,18 @@ public class Player {
                         }
                         System.out.println("Do you wish to re-roll again?");
                         System.out.println("1) Yes    2) No");
-                        byte inputChoice = scanner.nextByte();
-                        choice[0] = inputChoice;
-                        scanner.nextLine();
-                        while(inputChoice != 1 && inputChoice != 2){
+                        byte inputChoice;
+                        if(cheat){
+                            choice[0] = (byte)(int)command.get(0).get(0);
+                            command.remove(0);
+                        }else{
                             inputChoice = scanner.nextByte();
+                            choice[0] = inputChoice;
                             scanner.nextLine();
+                            while(inputChoice != 1 && inputChoice != 2){
+                                inputChoice = scanner.nextByte();
+                                scanner.nextLine();
+                            }
                         }
                         sendToServer(choice);
                         receiveMessage(1);
