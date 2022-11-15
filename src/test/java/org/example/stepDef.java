@@ -43,6 +43,8 @@ public class stepDef extends TestCase {
     }
     @Then("player is {int}")
     public void player_is_dead(int dead) {
+        System.out.println(dice);
+
         if(dead == 1){
             assertTrue(s.isDead(dice, fc));
         }else{
@@ -50,24 +52,21 @@ public class stepDef extends TestCase {
         }
     }
 
-    @When("re-roll dice {string}")
-    public void re_roll_dice(String string) {
-        String[] held = string.split(",");
+    @When("re-roll dice {string} and got new dice {string}")
+    public void re_roll_dice_and_got_new_dice(String indexString, String resultString) {
+        String[] iString = indexString.split(",");
         ArrayList<Integer> indices = new ArrayList<>();
-        for(String index: held){
+        for(String index: iString){
             indices.add(0,Integer.parseInt(index));
         }
-        for(int index: indices){
-            dice.remove(index);
+        ArrayList<Integer> result = new ArrayList<>();
+        String[] rString = resultString.split(",");
+        for(String index:rString){
+            result.add(Integer.parseInt(index));
         }
+        s.setReroll(indices);
+        dice = s.re_roll(dice, indices,result);
+        System.out.println(dice);
     }
-    @When("got new dice {string}")
-    public void got_new_dice(String string) {
-        String[] held = string.split(",");
-        for(String index:held){
-            dice.add(Integer.parseInt(index));
-        }
-    }
-
 
 }

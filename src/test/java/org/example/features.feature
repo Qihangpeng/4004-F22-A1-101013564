@@ -28,8 +28,7 @@
     Scenario Outline: player roll eight dice, re-roll once, score
       Given player roll eight dice <0> <1> <2> <3> <4> <5> <6> <7>
       And fortune card is <fc>
-      When re-roll dice <index>
-      And got new dice <dice>
+      When re-roll dice <index> and got new dice <dice>
       And player end turn
       Then player is <dead>
       And player score <score>
@@ -52,10 +51,8 @@
     Scenario Outline: player roll eight dice, re-roll twice, score
       Given player roll eight dice <0> <1> <2> <3> <4> <5> <6> <7>
       And fortune card is <fc>
-      When re-roll dice <index1>
-      And got new dice <dice1>
-      And re-roll dice <index2>
-      And got new dice <dice2>
+      When re-roll dice <index1> and got new dice <dice1>
+      And re-roll dice <index2> and got new dice <dice2>
       And player end turn
       Then player is <dead>
       And player score <score>
@@ -67,4 +64,6 @@
         |5  |5  |4  |2  |0  |1  |1  |1  |2   |"5,6,7" |"2,2,3"|"7"     |"2"    |500    |0     |
         |3  |3  |3  |1  |1  |1  |4  |4  |2   |"0"     |"1"    |"5,6"   |"1,1"  |1000   |0     |
         |3  |1  |1  |1  |1  |2  |2  |2  |2   |"5,6,7" |"3,1,1"|"0"     |"1"    |2000   |0     |
+        |1  |1  |1  |4  |4  |5  |5  |0  |0   |"3,4"   |"1,1"  |"3,4,5,"|"3,0,1"|1100   |0     |
+        |3  |3  |1  |1  |1  |0  |0  |0  |0   |"2,3,4" |"5,5,0"|"5,6"   |"3,0"  |600    |1     |
 

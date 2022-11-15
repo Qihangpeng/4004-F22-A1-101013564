@@ -1,5 +1,7 @@
 package Server;
 
+import io.cucumber.java.cy_gb.A;
+
 import java.io.IOException;
 import java.net.*;
 import java.util.ArrayList;
@@ -329,10 +331,11 @@ public class Server {
                     score = -1000;
                     break;
                 case 0:
+                    ArrayList<Integer> scoreDice = new ArrayList<>(dice);
                     for(int i = 0; i <reroll.size(); i++){
-                        dice.remove(dice.size()-1);
+                        scoreDice.remove(scoreDice.size()-1);
                     }
-                    int[] list = countDice(dice);
+                    int[] list = countDice(scoreDice);
                     score = calculateScore(list, 0);
             }
 
