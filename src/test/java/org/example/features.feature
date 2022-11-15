@@ -1,6 +1,6 @@
 @Tag
   @singleRoll
-  Feature: player plays a single round and then score
+  Feature: acceptance tests
     Scenario Outline: player roll eight dice, score
       Given player roll eight dice <0> <1> <2> <3> <4> <5> <6> <7>
       And fortune card is <fc>
@@ -87,12 +87,13 @@
         |2  |2  |2  |3  |4  |5  |1  |1  |34  |"6,7"   |"4,4"  |"0,1,2"  |"4,1,1"  |1300|0     |
 
     @multi-player
-    Feature: networked tests
-      Scenario Outline: 3 players play a cheated game
-        Given server is running with cheat command <commandS>
-        When player 1 starts with cheat command <command1>
-        And player 2 starts with cheat command <command2>
-        And player 3 starts with cheat command <command3>
-        Then game ends with winner <winner>
-        Examples:
+    Scenario Outline: 3 players play a cheated game
+      Given server is running with cheat command <commandS>
+      When player 1 starts with cheat command <command1>
+      And player 2 starts with cheat command <command2>
+      And player 3 starts with cheat command <command3>
+      Then game ends with winner <winner>
+      Examples:
+        |        commandS                                        |      command1       |     command2     |      command3      |  winner |
+        |"1-4,4,4,4,4,4,4,3-71-4,4,4,4,4,4,4,3-4-3,3,3,2,2,2,2,2"|"2"                  |"2"               |"2"                 |1        |
         

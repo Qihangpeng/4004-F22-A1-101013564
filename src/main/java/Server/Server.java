@@ -24,8 +24,10 @@ public class Server {
     private boolean canReroll;
     private int countDown;
     private ArrayList<Integer> reroll;
+    int winner;
 
     public Server(int port, Boolean test){
+        winner = 0;
         reroll = new ArrayList<>();
         countDown = 3;
         canReroll = true;
@@ -207,6 +209,7 @@ public class Server {
             }
         }
         System.out.println("Player "+ winner+ " won the game");
+        this.winner = winner;
         byte[] winnerByte = new byte[1];
         winnerByte[0] = (byte)winner;
         broadcast(winnerByte);
@@ -684,5 +687,5 @@ public class Server {
     public void setReroll(ArrayList<Integer> reroll){
         this.reroll = reroll;
     }
-
+    public int getWinner(){return this.winner;}
 }
